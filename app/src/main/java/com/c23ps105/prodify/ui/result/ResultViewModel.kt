@@ -1,12 +1,13 @@
-package com.c23ps105.prodify.ui.home
+package com.c23ps105.prodify.ui.result
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class ResultViewModel : ViewModel() {
+
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is notifications Fragment"
     }
     val text: LiveData<String> = _text
 }

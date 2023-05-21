@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.camera.ResultCameraFragment">
+
+
+    <TextView
+        android:id="@+id/m"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:contentDescription="@string/product_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/detail_bg"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/m">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.c23ps105.prodify.ui.customview.ButtonCustom
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/black400"
+                android:textColor="@color/offwhite"
+                android:padding="20dp"
+                android:text="@string/baju_pria" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ic_bookmark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_category" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ic_copy"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_category"
+            app:layout_constraintEnd_toStartOf="@id/ic_bookmark"
+            app:layout_constraintTop_toTopOf="@+id/tv_category" />
+
+        <com.c23ps105.prodify.ui.customview.TextViewCustom
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_category"
+            tools:text="Title" />
+
+        <com.c23ps105.prodify.ui.customview.TextViewCustom
+            android:id="@+id/title_sub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Bangkit T-Shirt" />
+
+        <com.c23ps105.prodify.ui.customview.TextViewCustom
+            android:id="@+id/desc_title"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@+id/title_sub"
+            app:layout_constraintTop_toBottomOf="@id/title_sub"
+            tools:text="Description" />
+
+        <com.c23ps105.prodify.ui.customview.TextViewCustom
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/ic_bookmark"
+            app:layout_constraintStart_toStartOf="@+id/desc_title"
+            app:layout_constraintTop_toBottomOf="@id/desc_title"
+            tools:text="Deskripsi Canon EOS 4000D Kit 18-55mm BARU DAN ORIGINAL 100% GARANSI 1 TAHUN" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

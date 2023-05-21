@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    tools:context=".ui.auth.AuthenticationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.c23ps105.prodify.ui.customview.TextViewCustom
+            android:id="@+id/textViewM2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingBottom="20dp"
+            android:text="@string/email_auth"
+            android:textSize="24sp" />
+
+        <com.c23ps105.prodify.ui.customview.TextViewCustom
+            android:id="@+id/textViewM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="60dp"
+            android:text="@string/desc_auth"
+            android:textSize="14sp" />
+
+        <com.c23ps105.prodify.ui.customview.EditTextField
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/hint_name"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp" />
+
+        <com.c23ps105.prodify.ui.customview.EditTextField
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/hint_email"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="16sp" />
+
+        <com.c23ps105.prodify.ui.customview.EditTextField
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="@string/hint_password"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp" />
+    </LinearLayout>
+
+    <com.c23ps105.prodify.ui.customview.ButtonCustom
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logres"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
