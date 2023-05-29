@@ -9,7 +9,11 @@
         android:id="@+id/authenticationFragment"
         android:name="com.c23ps105.prodify.ui.auth.AuthenticationFragment"
         android:label="fragment_authentication"
-        tools:layout="@layout/fragment_authentication" />
+        tools:layout="@layout/fragment_authentication" >
+        <action
+            android:id="@+id/action_authenticationFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.c23ps105.prodify.ui.auth.WelcomeFragment"
@@ -19,4 +23,9 @@
             android:id="@+id/action_welcomeFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        tools:layout="@layout/activity_main"
+        android:name="com.c23ps105.prodify.MainActivity"
+        android:label="MainActivity" />
 </navigation>

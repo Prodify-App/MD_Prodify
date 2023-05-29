@@ -9,22 +9,45 @@
         android:id="@+id/navigation_home"
         android:name="com.c23ps105.prodify.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_detail_result"
+            app:destination="@id/navigation_detail_result" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_article"
         android:name="com.c23ps105.prodify.ui.blogs.BlogsFragment"
         android:label="@string/title_blogs"
-        tools:layout="@layout/fragment_blogs" />
+        tools:layout="@layout/fragment_blogs" >
+        <action
+            android:id="@+id/action_navigation_article_to_navigation_detail_result"
+            app:destination="@id/navigation_detail_result" />
+    </fragment>
 
-    <fragment
-        android:id="@+id/navigation_result"
-        android:name="com.c23ps105.prodify.ui.result.ResultFragment"
-        android:label="@string/title_result"
-        tools:layout="@layout/fragment_result" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.c23ps105.prodify.ui.profile.ProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_detail_result"
+            app:destination="@id/navigation_detail_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_result"
+        android:name="com.c23ps105.prodify.ui.result.ResultFragment"
+        android:label="result"
+        tools:layout="@layout/fragment_result">
+        <action
+            android:id="@+id/action_navigation_result_to_navigation_detail_result"
+            app:destination="@id/navigation_detail_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail_result"
+        android:name="com.c23ps105.prodify.ui.result.DetailResultFragment"
+        android:label="DetailResult"
+        tools:layout="@layout/fragment_detail_result"/>
 </navigation>

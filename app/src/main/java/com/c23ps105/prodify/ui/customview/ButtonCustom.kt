@@ -34,7 +34,7 @@ class ButtonCustom : AppCompatButton {
         super.onDraw(canvas)
         background = if (isEnabled) enabledBackground else disabledBackground
         setTextColor(txtColor)
-        textSize = 16f
+//        textSize = 16f
     }
 
     private fun init() {

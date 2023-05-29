@@ -32,7 +32,7 @@
     <string name="logo">Logo</string>
     <string name="avatar">avatar</string>
     <string name="discover">Temuin berbagai hasil dari produk - produk berkualias</string>
-    <string name="bookmark">Bookmarks\n</string>
+    <string name="bookmark">Bookmarks</string>
     <string name="camera">camera\n</string>
     <string name="add_widget">addWidget</string>
     <string name="btn_shite">white</string>
@@ -49,4 +49,14 @@
     <string name="history">History</string>
     <string name="blogs_title">Bingung cara pakainya ?</string>
     <string name="blogs_desc">Explore tips and trick menarik dari foto sampai dengan hasil !</string>
+    <string name="permission_denied">Permission Denied\n</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="description">Description</string>
+    <string name="btn_finalize_product">Finalize Product</string>
+    <string name="title">Title</string>
+    <string name="Description">Description</string>
+    <string name="blogs_text">Klik Disini !</string>
+    <string name="date">25/5/2023\n</string>
 </resources>

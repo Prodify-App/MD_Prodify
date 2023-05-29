@@ -70,6 +70,7 @@
     <com.c23ps105.prodify.ui.customview.TextViewCustom
         android:id="@+id/bookmark"
         android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bookmark"

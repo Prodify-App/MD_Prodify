@@ -6,7 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.c23ps105.prodify.R
+import com.c23ps105.prodify.data.CardData
 import com.c23ps105.prodify.databinding.FragmentResultBinding
+import com.c23ps105.prodify.ui.ProductAdapter
+import com.c23ps105.prodify.ui.ResultAdapter
+import com.c23ps105.prodify.ui.home.HomeFragment
 
 class ResultFragment : Fragment() {
 
@@ -27,10 +34,22 @@ class ResultFragment : Fragment() {
         _binding = FragmentResultBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textNotifications
-        resultViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
+        val productAdapter = ResultAdapter {
+            val mBundle = Bundle()
+            mBundle.putInt(HomeFragment.EXTRA_IMG, it.imgData ?: 0)
+            mBundle.putString(HomeFragment.EXTRA_TITLE, it.titleData)
+            mBundle.putString(HomeFragment.EXTRA_DESC, it.contentData)
+            view?.findNavController()
+                ?.navigate(R.id.action_navigation_home_to_navigation_detail_result, mBundle)
         }
+        productAdapter.submitList(CardData.listData)
+
+        binding.rvResult.apply {
+//            setHasFixedSize(true)
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            adapter = productAdapter
+        }
+
         return root
     }
 

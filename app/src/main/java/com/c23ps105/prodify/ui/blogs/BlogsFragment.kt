@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.c23ps105.prodify.R
+import com.c23ps105.prodify.data.CardData
 import com.c23ps105.prodify.databinding.FragmentBlogsBinding
+import com.c23ps105.prodify.ui.BlogsAdapter
 
 class BlogsFragment : Fragment() {
 
@@ -19,15 +24,23 @@ class BlogsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(BlogsViewModel::class.java)
+            ViewModelProvider(this)[BlogsViewModel::class.java]
 
         _binding = FragmentBlogsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
+        val blogsAdapter = BlogsAdapter {
+            view?.findNavController()
+                ?.navigate(R.id.action_navigation_home_to_navigation_detail_result)
         }
+        blogsAdapter.submitList(CardData.listData)
+
+        binding.rvBlogs.apply {
+            setHasFixedSize(true)
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = blogsAdapter
+        }
+
         return root
     }
 
