@@ -38,12 +38,12 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/ic_bell"
+        android:id="@+id/ic_logout"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="30dp"
         android:contentDescription="@string/avatar"
-        android:src="@drawable/bell_pin"
+        android:src="@drawable/sign_out_squre"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -55,7 +55,7 @@
         android:layout_marginTop="15dp"
         app:cardBackgroundColor="@color/black500"
         app:cardCornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="@id/ic_bell"
+        app:layout_constraintEnd_toEndOf="@id/ic_logout"
         app:layout_constraintStart_toStartOf="@id/avatar"
         app:layout_constraintTop_toBottomOf="@id/avatar">
 
@@ -89,5 +89,5 @@
         app:layout_constraintStart_toStartOf="@+id/card"
         app:layout_constraintTop_toBottomOf="@id/bookmark"
         app:spanCount="2"
-        tools:listitem="@layout/item_grid" />
+        tools:listitem="@layout/item_staggered_grid" />
 </androidx.constraintlayout.widget.ConstraintLayout>

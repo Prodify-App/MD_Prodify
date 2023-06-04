@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.CardData
+import com.c23ps105.prodify.data.sample.CardData
 import com.c23ps105.prodify.databinding.FragmentBlogsBinding
-import com.c23ps105.prodify.ui.BlogsAdapter
+import com.c23ps105.prodify.ui.adapter.BlogsAdapter
 
 class BlogsFragment : Fragment() {
 

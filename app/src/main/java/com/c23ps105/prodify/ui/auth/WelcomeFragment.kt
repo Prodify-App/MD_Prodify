@@ -19,19 +19,18 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWelcomeBinding.inflate(layoutInflater)
-
+        val mbundle = Bundle()
         binding.btnRegister.setOnClickListener {
-            val mbundle = Bundle()
-            mbundle.putString(EXTRA_STATE, "register")
+            mbundle.putString(EXTRA_STATE, REGISTER_STATE)
             view?.findNavController()
                 ?.navigate(R.id.action_welcomeFragment_to_authenticationFragment, mbundle)
         }
 
         binding.btnLogin.setOnClickListener {
-            val mbundle = Bundle()
-            mbundle.putString(EXTRA_STATE, "login")
+            mbundle.putString(EXTRA_STATE, LOGIN_STATE)
             view?.findNavController()
                 ?.navigate(R.id.action_welcomeFragment_to_authenticationFragment, mbundle)
+
         }
 
         return binding.root
@@ -44,5 +43,7 @@ class WelcomeFragment : Fragment() {
 
     companion object {
         const val EXTRA_STATE = "state"
+        const val LOGIN_STATE = "login"
+        const val REGISTER_STATE = "register"
     }
 }

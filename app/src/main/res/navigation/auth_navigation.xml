@@ -26,6 +26,6 @@
     <activity
         android:id="@+id/mainActivity"
         tools:layout="@layout/activity_main"
-        android:name="com.c23ps105.prodify.MainActivity"
+        android:name="com.c23ps105.prodify.ui.MainActivity"
         android:label="MainActivity" />
 </navigation>

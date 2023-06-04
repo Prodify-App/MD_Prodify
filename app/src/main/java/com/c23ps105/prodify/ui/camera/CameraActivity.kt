@@ -29,9 +29,9 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         cameraBinding = binding.cameraView
         cameraBinding.captureImage.setOnClickListener { takePhoto() }
         cameraBinding.switchCamera.setOnClickListener {

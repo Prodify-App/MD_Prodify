@@ -1,4 +1,4 @@
-package com.c23ps105.prodify.data
+package com.c23ps105.prodify.data.sample
 
 import com.c23ps105.prodify.R
 

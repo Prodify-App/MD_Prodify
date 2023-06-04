@@ -32,6 +32,8 @@
             android:text="@string/blogs_text"
             android:textColor="@color/offwhite"
             android:textSize="35sp"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="@+id/iv_blogs"
             app:layout_constraintEnd_toStartOf="@+id/iv_blogs"
             app:layout_constraintStart_toStartOf="parent"

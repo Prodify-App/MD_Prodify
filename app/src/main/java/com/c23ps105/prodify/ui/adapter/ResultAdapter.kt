@@ -1,4 +1,4 @@
-package com.c23ps105.prodify.ui
+package com.c23ps105.prodify.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.CardDataClass
-import com.c23ps105.prodify.databinding.ItemLinearBinding
+import com.c23ps105.prodify.data.sample.CardDataClass
+import com.c23ps105.prodify.databinding.ItemStaggeredGridBinding
 
-class BlogsAdapter(private val onClick: (CardDataClass) -> Unit) :
-    ListAdapter<CardDataClass, BlogsAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ResultAdapter(private val onClick: (CardDataClass) -> Unit) :
+    ListAdapter<CardDataClass, ResultAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemLinearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemStaggeredGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -28,13 +28,15 @@ class BlogsAdapter(private val onClick: (CardDataClass) -> Unit) :
         }
     }
 
-    inner class MyViewHolder(val binding: ItemLinearBinding) : RecyclerView.ViewHolder(
+    inner class MyViewHolder(val binding: ItemStaggeredGridBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
         fun bind(pokemon: CardDataClass) {
             binding.apply {
+                tvCategoryCard.text = pokemon.titleData
+                tvTitle.text = pokemon.contentData
                 Glide.with(binding.root).load(pokemon.imgData).placeholder(R.drawable.placeholder)
-                    .into(ivBlogs)
+                    .into(ivHistory)
             }
         }
     }

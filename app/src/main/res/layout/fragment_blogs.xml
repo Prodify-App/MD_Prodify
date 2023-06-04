@@ -6,60 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.blogs.BlogsFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:contentDescription="@string/logo"
-        android:src="@drawable/group_36"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="30dp"
-        android:src="@drawable/avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageView" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="@string/avatar"
-        android:src="@drawable/bell_pin"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintEnd_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/search_bg"
-        android:queryHint="Search here..."
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:searchIcon="@drawable/search_alt_duotone_line" />
+    <include
+        android:id="@+id/navbar"
+        layout="@layout/navbar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_blogs"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="@+id/avatar"
+        app:layout_constraintEnd_toEndOf="@+id/navbar"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/search"
+        app:layout_constraintStart_toStartOf="@+id/navbar"
+        app:layout_constraintTop_toBottomOf="@id/navbar"
         tools:listitem="@layout/item_linear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

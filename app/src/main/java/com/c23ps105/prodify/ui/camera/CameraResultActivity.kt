@@ -1,14 +1,12 @@
 package com.c23ps105.prodify.ui.camera
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.c23ps105.prodify.MainActivity
+import com.c23ps105.prodify.ui.MainActivity
 import com.c23ps105.prodify.databinding.ActivityCameraResultBinding
 import com.c23ps105.prodify.utils.rotateFile
 import java.io.File
@@ -39,7 +37,7 @@ class CameraResultActivity : AppCompatActivity() {
         }
 
         binding.btnFinalize.setOnClickListener {
-            Intent(this@CameraResultActivity,MainActivity::class.java).also {
+            Intent(this@CameraResultActivity, MainActivity::class.java).also {
                 finish()
             }
         }
