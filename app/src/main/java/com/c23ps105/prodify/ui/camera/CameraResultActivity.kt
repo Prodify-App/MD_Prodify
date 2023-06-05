@@ -4,11 +4,17 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.c23ps105.prodify.ui.MainActivity
 import com.c23ps105.prodify.databinding.ActivityCameraResultBinding
+import com.c23ps105.prodify.utils.reduceFileImage
 import com.c23ps105.prodify.utils.rotateFile
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 class CameraResultActivity : AppCompatActivity() {
@@ -37,8 +43,23 @@ class CameraResultActivity : AppCompatActivity() {
         }
 
         binding.btnFinalize.setOnClickListener {
-            Intent(this@CameraResultActivity, MainActivity::class.java).also {
-                finish()
+            if (getFile != null) {
+                val file = reduceFileImage(getFile as File)
+
+//                val token = intent.getStringExtra(HomeActivity.EXTRA_TOKEN)
+//                Log.d("testing", token.toString())
+
+//                val description =
+//                    binding.descStory.text.toString().toRequestBody("text/plain".toMediaType())
+
+                val lat = "0".toRequestBody("text/plain".toMediaType())
+                val lon = "0".toRequestBody("text/plain".toMediaType())
+                val requestImageFile = file.asRequestBody("image/jpeg".toMediaType())
+                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "photo",
+                    file.name,
+                    requestImageFile
+                )
             }
         }
     }

@@ -2,24 +2,24 @@ package com.c23ps105.prodify.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterTestResponse(
-    @field:SerializedName("error")
-    val error: Boolean,
-
+data class RegisterResponse(
     @field:SerializedName("message")
     val message: String
 )
 
-data class LoginTestResponse(
+data class LoginResponse(
 
-    @field:SerializedName("loginResult")
-    val loginResult: LoginResult,
+    @field:SerializedName("id")
+    val id: Int,
 
-    @field:SerializedName("error")
-    val error: Boolean,
+    @field:SerializedName("accessToken")
+    val accessToken: String,
 
-    @field:SerializedName("message")
-    val message: String
+    @field:SerializedName("email")
+    val email: String,
+
+    @field:SerializedName("username")
+    val username: String
 )
 
 data class LoginResult(

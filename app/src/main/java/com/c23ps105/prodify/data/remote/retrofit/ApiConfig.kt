@@ -1,12 +1,12 @@
-package com.c23ps105.prodify.data.remote.retrofit.product
+package com.c23ps105.prodify.data.remote.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiProductConfig {
-    fun getApiProductService(): ApiProductService {
+object ApiConfig {
+    fun getApiService(): ApiService {
         val loggingInterceptor =
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
@@ -17,6 +17,6 @@ object ApiProductConfig {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
-        return retrofit.create(ApiProductService::class.java)
+        return retrofit.create(ApiService::class.java)
     }
 }

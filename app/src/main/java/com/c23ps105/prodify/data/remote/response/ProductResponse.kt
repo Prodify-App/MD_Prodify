@@ -27,7 +27,7 @@ data class DetailProductResponse(
     val category: String,
 
     @field:SerializedName("updatedAt")
-    val updatedAt: String
+    val updatedAt: String? = null
 )
 
 data class UploadProductResponse(

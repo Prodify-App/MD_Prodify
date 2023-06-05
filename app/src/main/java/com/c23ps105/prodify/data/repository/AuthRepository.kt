@@ -1,11 +1,12 @@
 package com.c23ps105.prodify.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.c23ps105.prodify.data.remote.response.LoginTestResponse
-import com.c23ps105.prodify.data.remote.response.RegisterTestResponse
-import com.c23ps105.prodify.data.remote.retrofit.ApiAuthTestService
+import com.c23ps105.prodify.data.remote.response.LoginResponse
+import com.c23ps105.prodify.data.remote.response.RegisterResponse
+import com.c23ps105.prodify.data.remote.retrofit.ApiService
 import com.c23ps105.prodify.utils.Event
 import com.c23ps105.prodify.utils.Result
 import org.json.JSONObject
@@ -14,7 +15,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AuthRepository private constructor(
-    private val apiService: ApiAuthTestService
+    private val apiService: ApiService
 ) {
     private val tokenResult = MediatorLiveData<Result<List<String>>>()
 
@@ -28,35 +29,35 @@ class AuthRepository private constructor(
         tokenResult.value = Result.Loading
 
         val login = apiService.login(email, password)
-        login.enqueue(object : Callback<LoginTestResponse> {
+        login.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
-                call: Call<LoginTestResponse>,
-                response: Response<LoginTestResponse>
+                call: Call<LoginResponse>,
+                response: Response<LoginResponse>
             ) {
                 if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error) {
-                        val result = responseBody.loginResult
+                    val result = response.body()
+                    if (result != null) {
                         tokenResult.value =
                             Result.Success(
                                 listOf(
-                                    result.token,
-                                    result.name,
-                                    result.userId,
-                                    responseBody.message
+                                    result.accessToken,
+                                    result.username,
+                                    result.email,
+                                    "Success"
                                 )
                             )
                     } else {
                         _toastText.value =
-                            Event(responseBody?.message ?: "Ups ! something is wrong.")
+                            Event("Ups ! something is wrong.")
                     }
                 } else {
-                    val errorBody = JSONObject(response.errorBody()!!.string()).getString("message")
-                    tokenResult.value = Result.Error(errorBody)
+//                    val errorBody = JSONObject(response.errorBody()!!.string()).getString("message")
+//                    tokenResult.value = Result.Error(errorBody)
+                    tokenResult.value = Result.Error("Ups ! Response Failed")
                 }
             }
 
-            override fun onFailure(call: Call<LoginTestResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 tokenResult.value = Result.Error("Failure : " + t.message)
             }
         })
@@ -67,10 +68,11 @@ class AuthRepository private constructor(
         _isRegistered.value = null
 
         val register = apiService.register(username, email, password)
-        register.enqueue(object : Callback<RegisterTestResponse> {
+        Log.d(TAG, listOf(username, email, password).toString())
+        register.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
-                call: Call<RegisterTestResponse>,
-                response: Response<RegisterTestResponse>
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
             ) {
                 val responseBody = response.body()
                 if (response.isSuccessful) {
@@ -82,12 +84,12 @@ class AuthRepository private constructor(
                     }
                 } else {
                     _isRegistered.value = false
-                    val errorBody = JSONObject(response.errorBody()!!.string())
-                    _toastText.value = Event(errorBody.getString("message"))
+                    Log.d(TAG, response.raw().toString())
+                    _toastText.value = Event("Harap mengisi data yang benar")
                 }
             }
 
-            override fun onFailure(call: Call<RegisterTestResponse>, t: Throwable) {
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 _isRegistered.value = false
                 _toastText.value = Event(t.message.toString())
             }
@@ -95,7 +97,7 @@ class AuthRepository private constructor(
     }
 
 
-    fun setToastText(text: String){
+    fun setToastText(text: String) {
         _toastText.value = Event(text)
     }
 
@@ -105,7 +107,7 @@ class AuthRepository private constructor(
         @Volatile
         private var instance: AuthRepository? = null
         fun getInstance(
-            apiService: ApiAuthTestService
+            apiService: ApiService
         ): AuthRepository =
             instance ?: synchronized(this) {
                 instance ?: AuthRepository(apiService)

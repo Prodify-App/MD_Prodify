@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.data.local.room.ProductDao
 import com.c23ps105.prodify.data.remote.response.DetailProductResponse
-import com.c23ps105.prodify.data.remote.retrofit.product.ApiProductService
+import com.c23ps105.prodify.data.remote.retrofit.ApiService
 import com.c23ps105.prodify.utils.AppExecutors
 import com.c23ps105.prodify.utils.Result
 import retrofit2.Call
@@ -15,7 +15,7 @@ import retrofit2.Response
 
 
 class ProductRepository private constructor(
-    private val api: ApiProductService,
+    private val api: ApiService,
     private val productDao: ProductDao,
     private val appExecutors: AppExecutors
 ) {
@@ -43,7 +43,7 @@ class ProductRepository private constructor(
                             val product = ProductEntity(
                                 detailProductResponse.id,
                                 detailProductResponse.createdAt,
-                                detailProductResponse.updatedAt,
+                                detailProductResponse.updatedAt.toString(),
                                 detailProductResponse.title,
                                 detailProductResponse.category,
                                 detailProductResponse.description,
@@ -91,7 +91,7 @@ class ProductRepository private constructor(
         private var instance: ProductRepository? = null
 
         fun getInstance(
-            api: ApiProductService,
+            api: ApiService,
             productDao: ProductDao,
             appExecutors: AppExecutors
         ): ProductRepository =
