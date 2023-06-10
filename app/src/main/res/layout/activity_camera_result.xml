@@ -28,35 +28,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--    <LinearLayout-->
+<!--        android:id="@+id/result_alternative_container"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/detail_container"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+
+<!--        <com.c23ps105.prodify.ui.customview.ButtonCustom-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:text="@string/one" />-->
+
+<!--        <com.c23ps105.prodify.ui.customview.ButtonCustom-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:text="@string/two" />-->
 
 
-    <LinearLayout
-        android:id="@+id/result_alternative_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/detail_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.c23ps105.prodify.ui.customview.ButtonCustom
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/one" />
-
-        <com.c23ps105.prodify.ui.customview.ButtonCustom
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/two" />
-
-
-        <com.c23ps105.prodify.ui.customview.ButtonCustom
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/three" />
-    </LinearLayout>
+<!--        <com.c23ps105.prodify.ui.customview.ButtonCustom-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:text="@string/three" />-->
+<!--    </LinearLayout>-->
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,32 +68,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/m">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/tv_category_card"
+        <com.c23ps105.prodify.ui.customview.ButtonCustom
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/black400"
+            android:paddingHorizontal="14dp"
             android:layout_margin="30dp"
+            android:text="@string/category"
+            android:textColor="@color/offwhite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <com.c23ps105.prodify.ui.customview.ButtonCustom
-                android:id="@+id/tv_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/black400"
-                android:padding="20dp"
-                android:text="@string/category"
-                android:textColor="@color/offwhite" />
-        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/ic_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_category_card"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_category"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_category_card">
+            app:layout_constraintTop_toTopOf="@+id/tv_category">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ic_copy"
@@ -116,9 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_category_card"
-            app:layout_constraintTop_toBottomOf="@id/tv_category_card"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_category"
             android:text="@string/title" />
 
         <com.c23ps105.prodify.ui.customview.EditTextField
@@ -127,7 +120,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pnregular"
             android:hint="@string/tv_category_item"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/ic_container"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@id/title" />
@@ -138,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/description"
-            android:textSize="30sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/edt_title"
             app:layout_constraintTop_toBottomOf="@id/edt_title" />
 
@@ -149,7 +142,7 @@
             android:fontFamily="@font/pnregular"
             android:hint="@string/blogs_desc"
             android:maxLines="3"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/ic_container"
             app:layout_constraintStart_toStartOf="@+id/desc_title"
             app:layout_constraintTop_toBottomOf="@id/desc_title"
@@ -168,13 +161,34 @@
             android:text="@string/btn_finalize_product" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_pure"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lagi Loading"
+            android:textSize="24sp"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
