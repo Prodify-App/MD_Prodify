@@ -3,12 +3,17 @@ package com.c23ps105.prodify.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.data.local.room.ProductDao
 import com.c23ps105.prodify.data.remote.response.DetailProductResponse
+import com.c23ps105.prodify.data.remote.response.PredictResponse
+import com.c23ps105.prodify.data.remote.response.UploadProductResponse
 import com.c23ps105.prodify.data.remote.retrofit.ApiService
 import com.c23ps105.prodify.utils.AppExecutors
 import com.c23ps105.prodify.utils.Result
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +27,8 @@ class ProductRepository private constructor(
 
     private val productResult = MediatorLiveData<Result<List<ProductEntity>>>()
     private val detailResult = MediatorLiveData<Result<List<ProductEntity>>>()
-
+    private val predictResult = MediatorLiveData<Result<List<String>>>()
+    private val postProductResult = MutableLiveData<String>()
     fun getProductFromApi(token: String?): LiveData<Result<List<ProductEntity>>> {
         productResult.value = Result.Loading
         Log.d(TAG, token.toString())
@@ -82,6 +88,66 @@ class ProductRepository private constructor(
             detailResult.value = Result.Success(newData)
         }
         return detailResult
+    }
+
+    fun postProduct(
+        image: MultipartBody.Part,
+        title: RequestBody,
+        category: RequestBody,
+        description: RequestBody,
+    ): LiveData<String> {
+        val client = api.uploadProduct(image, title, category, description)
+        Log.d(TAG, client.toString())
+        client.enqueue(object : Callback<UploadProductResponse> {
+            override fun onResponse(
+                call: Call<UploadProductResponse>,
+                response: Response<UploadProductResponse>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, "Success !")
+                    Log.d(TAG, response.body().toString())
+                } else {
+                    Log.d(TAG, "Something went wrong...")
+                    Log.d(TAG, response.raw().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<UploadProductResponse>, t: Throwable) {
+                Log.d(TAG, "FAILURE")
+            }
+
+        })
+        return postProductResult
+    }
+
+    fun predict(category: RequestBody, image: MultipartBody.Part): LiveData<Result<List<String>>> {
+        predictResult.value = Result.Loading
+
+        val client = api.predict(category, image)
+        client.enqueue(object : Callback<PredictResponse> {
+            override fun onResponse(
+                call: Call<PredictResponse>,
+                response: Response<PredictResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    predictResult.value = Result.Success(
+                        listOf(
+                            body?.title.toString(),
+                            body?.description.toString()
+                        )
+                    )
+                } else {
+                    predictResult.value = Result.Error("ups ! response unSuccessful")
+                }
+            }
+
+            override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
+                predictResult.value = Result.Error("ups ! Failure : ${t.message}")
+            }
+
+        })
+        return predictResult
     }
 
     companion object {

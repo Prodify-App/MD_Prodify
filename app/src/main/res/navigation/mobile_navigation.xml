@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/navigation_detail_result"
-        android:name="com.c23ps105.prodify.ui.result.DetailResultFragment"
+        android:name="com.c23ps105.prodify.ui.detail.DetailResultFragment"
         android:label="DetailResult"
         tools:layout="@layout/fragment_detail_result"/>
 </navigation>

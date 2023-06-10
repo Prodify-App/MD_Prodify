@@ -1,10 +1,10 @@
-package com.c23ps105.prodify.ui.viewModel
+package com.c23ps105.prodify.helper
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.c23ps105.prodify.data.SessionPreferences
 import com.c23ps105.prodify.data.repository.AuthRepository
 import com.c23ps105.prodify.di.Injection
+import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 
 class AuthViewModelFactory private constructor(
     private val authRepository: AuthRepository,
@@ -27,7 +27,7 @@ class AuthViewModelFactory private constructor(
         private var instance: AuthViewModelFactory? = null
         fun getInstance(pref: SessionPreferences): AuthViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: AuthViewModelFactory(Injection.provideAuthRepository(), pref)
+                instance ?: AuthViewModelFactory(Injection.provideAuthRepository(pref), pref)
             }.also { instance = it }
     }
 }

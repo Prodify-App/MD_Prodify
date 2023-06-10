@@ -12,6 +12,7 @@ import com.c23ps105.prodify.R
 import com.c23ps105.prodify.data.sample.CardData
 import com.c23ps105.prodify.databinding.FragmentBlogsBinding
 import com.c23ps105.prodify.ui.adapter.BlogsAdapter
+import com.c23ps105.prodify.ui.viewModel.BlogsViewModel
 
 class BlogsFragment : Fragment() {
 

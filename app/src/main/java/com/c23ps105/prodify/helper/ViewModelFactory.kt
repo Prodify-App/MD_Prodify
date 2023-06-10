@@ -1,11 +1,11 @@
-package com.c23ps105.prodify.ui.viewModel
+package com.c23ps105.prodify.helper
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.c23ps105.prodify.data.SessionPreferences
 import com.c23ps105.prodify.data.repository.ProductRepository
 import com.c23ps105.prodify.di.Injection
+import com.c23ps105.prodify.ui.viewModel.ProductViewModel
 
 
 class ViewModelFactory(
@@ -28,7 +28,7 @@ class ViewModelFactory(
 
         fun getInstance(context: Context, pref: SessionPreferences): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideProductRepository(context), pref)
+                instance ?: ViewModelFactory(Injection.provideProductRepository(context, pref), pref)
             }.also { instance = it }
     }
 }

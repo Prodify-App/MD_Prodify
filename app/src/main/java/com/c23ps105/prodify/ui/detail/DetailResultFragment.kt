@@ -1,4 +1,4 @@
-package com.c23ps105.prodify.ui.result
+package com.c23ps105.prodify.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

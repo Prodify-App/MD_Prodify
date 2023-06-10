@@ -1,4 +1,4 @@
-package com.c23ps105.prodify.data
+package com.c23ps105.prodify.helper
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -30,15 +30,10 @@ class SessionPreferences private constructor(private val dataStore: DataStore<Pr
         }
     }
 
-    suspend fun saveSessionSetting(isSessionActive: Boolean) {
-        dataStore.edit { preferences ->
-            preferences[SESSION_KEY] = isSessionActive
-        }
-    }
-
-    suspend fun saveTokenSetting(token: String) {
+    suspend fun saveSessionSetting(token: String, isSessionActive: Boolean) {
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
+            preferences[SESSION_KEY] = isSessionActive
         }
     }
 

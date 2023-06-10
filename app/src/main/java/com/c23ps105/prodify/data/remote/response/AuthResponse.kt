@@ -21,15 +21,3 @@ data class LoginResponse(
     @field:SerializedName("username")
     val username: String
 )
-
-data class LoginResult(
-
-    @field:SerializedName("name")
-    val name: String,
-
-    @field:SerializedName("userId")
-    val userId: String,
-
-    @field:SerializedName("token")
-    val token: String
-)

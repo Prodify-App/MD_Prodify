@@ -27,9 +27,6 @@ class ResultFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val resultViewModel =
-            ViewModelProvider(this).get(ResultViewModel::class.java)
-
         _binding = FragmentResultBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

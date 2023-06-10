@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.SessionPreferences
+import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.databinding.FragmentAuthenticationBinding
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
-import com.c23ps105.prodify.ui.viewModel.AuthViewModelFactory
+import com.c23ps105.prodify.helper.AuthViewModelFactory
 import com.c23ps105.prodify.utils.Result
 import com.google.android.material.snackbar.Snackbar
 

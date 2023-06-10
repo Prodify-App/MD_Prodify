@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/black400"
                 android:padding="20dp"
-                android:text="@string/baju_pria"
+                android:text="@string/category"
                 android:textColor="@color/offwhite" />
         </androidx.cardview.widget.CardView>
 
@@ -168,4 +168,13 @@
             android:text="@string/btn_finalize_product" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

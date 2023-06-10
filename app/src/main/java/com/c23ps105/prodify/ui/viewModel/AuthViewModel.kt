@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.c23ps105.prodify.data.SessionPreferences
+import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
@@ -18,11 +18,9 @@ class AuthViewModel(
     fun getTokenSetting(): LiveData<String> {
         return pref.getToken().asLiveData()
     }
-
     fun saveSettings(token: String) {
         viewModelScope.launch {
-            pref.saveSessionSetting(token.isNotEmpty())
-            pref.saveTokenSetting(token)
+            pref.saveSessionSetting(token, token.isNotEmpty())
         }
     }
 

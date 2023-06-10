@@ -1,7 +1,6 @@
 package com.c23ps105.prodify.ui.profile
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +11,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.c23ps105.prodify.data.SessionPreferences
+import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.data.sample.CardData
 import com.c23ps105.prodify.databinding.FragmentProfileBinding
-import com.c23ps105.prodify.ui.MainActivity
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
-import com.c23ps105.prodify.ui.auth.AuthActivity
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
-import com.c23ps105.prodify.ui.viewModel.AuthViewModelFactory
+import com.c23ps105.prodify.helper.AuthViewModelFactory
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 

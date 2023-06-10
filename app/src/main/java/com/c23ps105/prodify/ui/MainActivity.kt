@@ -20,14 +20,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.SessionPreferences
+import com.c23ps105.prodify.data.remote.retrofit.TokenManager
+import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.databinding.ActivityMainBinding
 import com.c23ps105.prodify.ui.auth.AuthActivity
 import com.c23ps105.prodify.ui.camera.CameraActivity
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
-import com.c23ps105.prodify.ui.viewModel.AuthViewModelFactory
+import com.c23ps105.prodify.helper.AuthViewModelFactory
 import com.c23ps105.prodify.ui.viewModel.ProductViewModel
-import com.c23ps105.prodify.ui.viewModel.ViewModelFactory
+import com.c23ps105.prodify.helper.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -36,12 +37,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TokenManager.init(this)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         supportActionBar?.hide()
-
         val pref = SessionPreferences.getInstance(dataStore)
         val factory = AuthViewModelFactory.getInstance(pref)
         val viewModel: AuthViewModel by viewModels { factory }
+
+
         viewModel.getSessionSettings().observe(this) {
             checkLogin(it)
         }

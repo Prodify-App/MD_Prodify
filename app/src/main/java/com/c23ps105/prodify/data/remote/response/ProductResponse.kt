@@ -49,3 +49,12 @@ data class UploadProductResponse(
     @field:SerializedName("category")
     val category: String,
 )
+
+data class PredictResponse(
+
+    @field:SerializedName("description")
+    val description: String,
+
+    @field:SerializedName("title")
+    val title: String
+)
