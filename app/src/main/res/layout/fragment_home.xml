@@ -12,13 +12,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.home.HomeFragment">
+            tools:context=".ui.main.home.HomeFragment">
 
             <include
                 android:id="@+id/navbar"
                 layout="@layout/navbar_layout" />
 
-            <com.c23ps105.prodify.ui.customview.TextViewCustom
+            <com.c23ps105.prodify.ui.customview.ProdifyTextView
                 android:id="@+id/tv_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_history"
                 tools:listitem="@layout/item_grid" />
 
-            <com.c23ps105.prodify.ui.customview.TextViewCustom
+            <com.c23ps105.prodify.ui.customview.ProdifyTextView
                 android:id="@+id/tv_blogs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 app:layout_constraintStart_toStartOf="@+id/rv_home_history"
                 app:layout_constraintTop_toBottomOf="@+id/rv_home_history" />
 
-            <com.c23ps105.prodify.ui.customview.TextViewCustom
+            <com.c23ps105.prodify.ui.customview.ProdifyTextView
                 android:id="@+id/tv_desc_blogs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

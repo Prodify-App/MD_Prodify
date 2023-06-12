@@ -3,58 +3,83 @@ package com.c23ps105.prodify.ui.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.sample.CardDataClass
+import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.databinding.ItemStaggeredGridBinding
 
-class ResultAdapter(private val onClick: (CardDataClass) -> Unit) :
-    ListAdapter<CardDataClass, ResultAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ResultAdapter(
+    private val onBookmarkClick: (ProductEntity) -> Unit,
+    private val onProductClick: (ProductEntity) -> Unit
+) :
+    ListAdapter<ProductEntity, ResultAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemStaggeredGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemStaggeredGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val pokemon = getItem(position)
-        holder.bind(pokemon)
+        val product = getItem(position)
+        holder.bind(product)
 
+        val icBookmark = holder.binding.icBookmark
+        if (product.isBookmarked) {
+            icBookmark.setImageDrawable(
+                ContextCompat.getDrawable(
+                    icBookmark.context,
+                    R.drawable.bookmarked
+                )
+            )
+        } else {
+            icBookmark.setImageDrawable(
+                ContextCompat.getDrawable(
+                    icBookmark.context,
+                    R.drawable.bookmark
+                )
+            )
+        }
+
+        icBookmark.setOnClickListener {
+            onBookmarkClick(product)
+        }
         holder.binding.root.setOnClickListener {
-            onClick(pokemon)
+            onProductClick(product)
         }
     }
 
     inner class MyViewHolder(val binding: ItemStaggeredGridBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(pokemon: CardDataClass) {
+        fun bind(product: ProductEntity) {
             binding.apply {
-                tvCategoryCard.text = pokemon.titleData
-                tvTitle.text = pokemon.contentData
-                Glide.with(binding.root).load(pokemon.imgData).placeholder(R.drawable.placeholder)
+                tvCategoryCardMiddle.text = product.category
+                tvTitle.text = product.title
+                Glide.with(ivHistory).load(product.imageURL).placeholder(R.drawable.placeholder)
                     .into(ivHistory)
             }
         }
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<CardDataClass> =
-            object : DiffUtil.ItemCallback<CardDataClass>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<ProductEntity> =
+            object : DiffUtil.ItemCallback<ProductEntity>() {
                 override fun areItemsTheSame(
-                    oldItem: CardDataClass,
-                    newItem: CardDataClass
+                    oldItem: ProductEntity,
+                    newItem: ProductEntity
                 ): Boolean {
-                    return oldItem.titleData == newItem.titleData
+                    return oldItem.id == newItem.id
                 }
 
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
-                    oldItem: CardDataClass,
-                    newItem: CardDataClass
+                    oldItem: ProductEntity,
+                    newItem: ProductEntity
                 ): Boolean {
                     return oldItem == newItem
                 }

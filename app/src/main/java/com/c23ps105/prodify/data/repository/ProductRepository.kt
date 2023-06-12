@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.data.local.room.ProductDao
 import com.c23ps105.prodify.data.remote.response.DetailProductResponse
-import com.c23ps105.prodify.data.remote.response.PredictResponse
 import com.c23ps105.prodify.data.remote.response.UploadProductResponse
 import com.c23ps105.prodify.data.remote.retrofit.ApiService
 import com.c23ps105.prodify.utils.AppExecutors
@@ -24,15 +23,13 @@ class ProductRepository private constructor(
     private val productDao: ProductDao,
     private val appExecutors: AppExecutors
 ) {
-
     private val productResult = MediatorLiveData<Result<List<ProductEntity>>>()
-    private val detailResult = MediatorLiveData<Result<List<ProductEntity>>>()
-    private val predictResult = MediatorLiveData<Result<List<String>>>()
+    val getProductList: LiveData<Result<List<ProductEntity>>> = productResult
+
+    private val productDetailResult = MediatorLiveData<Result<ProductEntity>>()
     private val postProductResult = MutableLiveData<String>()
-    fun getProductFromApi(token: String?): LiveData<Result<List<ProductEntity>>> {
+    fun getProductFromApi() {
         productResult.value = Result.Loading
-        Log.d(TAG, token.toString())
-//        val client = api.getStories("Bearer $token")
         val client = api.getProducts()
         client.enqueue(object : Callback<List<DetailProductResponse>> {
             override fun onResponse(
@@ -45,7 +42,7 @@ class ProductRepository private constructor(
                     appExecutors.diskIO.execute {
                         detailProductResponseList?.forEach { detailProductResponse ->
                             val isBookmarked =
-                                productDao.isProductBookmarked(detailProductResponse.title)
+                                productDao.isProductBookmarked(detailProductResponse.id)
                             val product = ProductEntity(
                                 detailProductResponse.id,
                                 detailProductResponse.createdAt,
@@ -73,21 +70,54 @@ class ProductRepository private constructor(
         productResult.addSource(localData) { newData: List<ProductEntity> ->
             productResult.value = Result.Success(newData)
         }
-        return productResult
     }
 
-    fun getProductList(): LiveData<Result<List<ProductEntity>>> {
-        return productResult
-    }
+    fun getProductDetail(
+        id: Int
+    ): LiveData<Result<ProductEntity>> {
+        productDetailResult.value = Result.Loading
+        val api = api.getDetailProduct(id)
+        api.enqueue(object : Callback<DetailProductResponse> {
+            override fun onResponse(
+                call: Call<DetailProductResponse>, response: Response<DetailProductResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val product = ArrayList<ProductEntity>()
+                    appExecutors.diskIO.execute {
+                        response.body()?.let {
+                            val isBookmarked = productDao.isProductBookmarked(it.id)
+                            val detail = ProductEntity(
+                                it.id,
+                                it.createdAt,
+                                it.updatedAt.toString(),
+                                it.title,
+                                it.category,
+                                it.description,
+                                it.imageURL,
+                                isBookmarked
+                            )
+                            product.add(detail)
+                            productDao.deleteAll()
+                            productDao.insertProduct(product)
 
-    fun getDetailProduct(id: String): LiveData<Result<List<ProductEntity>>> {
-        detailResult.value = Result.Loading
+                            val localData = productDao.getProductById(it.id)
+                            productDetailResult.addSource(localData) { newData: ProductEntity ->
+                                productDetailResult.value = Result.Success(newData)
+                            }
+                        }
+                    }
 
-        val localData = productDao.getProductById(id)
-        detailResult.addSource(localData) { newData: List<ProductEntity> ->
-            detailResult.value = Result.Success(newData)
-        }
-        return detailResult
+                } else {
+                    productDetailResult.value = Result.Error("Ups! Network Error.")
+                }
+            }
+
+            override fun onFailure(call: Call<DetailProductResponse>, t: Throwable) {
+                productDetailResult.value = Result.Error("Response Failure : ${t.message}")
+            }
+
+        })
+        return productDetailResult
     }
 
     fun postProduct(
@@ -100,8 +130,7 @@ class ProductRepository private constructor(
         Log.d(TAG, client.toString())
         client.enqueue(object : Callback<UploadProductResponse> {
             override fun onResponse(
-                call: Call<UploadProductResponse>,
-                response: Response<UploadProductResponse>
+                call: Call<UploadProductResponse>, response: Response<UploadProductResponse>
             ) {
                 if (response.isSuccessful) {
                     Log.d(TAG, "Success !")
@@ -120,34 +149,15 @@ class ProductRepository private constructor(
         return postProductResult
     }
 
-    fun predict(category: RequestBody, image: MultipartBody.Part): LiveData<Result<List<String>>> {
-        predictResult.value = Result.Loading
+    fun setBookmarkedProduct(product: ProductEntity, bookmarkState: Boolean) {
+        appExecutors.diskIO.execute {
+            product.isBookmarked = bookmarkState
+            productDao.updateProduct(product)
+        }
+    }
 
-        val client = api.predict(category, image)
-        client.enqueue(object : Callback<PredictResponse> {
-            override fun onResponse(
-                call: Call<PredictResponse>,
-                response: Response<PredictResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    predictResult.value = Result.Success(
-                        listOf(
-                            body?.title.toString(),
-                            body?.description.toString()
-                        )
-                    )
-                } else {
-                    predictResult.value = Result.Error("ups ! response unSuccessful")
-                }
-            }
-
-            override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
-                predictResult.value = Result.Error("ups ! Failure : ${t.message}")
-            }
-
-        })
-        return predictResult
+    fun getBookmarkedProduct(): LiveData<List<ProductEntity>> {
+        return productDao.getBookmarkedProduct()
     }
 
     companion object {
@@ -157,12 +167,9 @@ class ProductRepository private constructor(
         private var instance: ProductRepository? = null
 
         fun getInstance(
-            api: ApiService,
-            productDao: ProductDao,
-            appExecutors: AppExecutors
-        ): ProductRepository =
-            instance ?: synchronized(this) {
-                instance ?: ProductRepository(api, productDao, appExecutors)
-            }.also { instance = it }
+            api: ApiService, productDao: ProductDao, appExecutors: AppExecutors
+        ): ProductRepository = instance ?: synchronized(this) {
+            instance ?: ProductRepository(api, productDao, appExecutors)
+        }.also { instance = it }
     }
 }

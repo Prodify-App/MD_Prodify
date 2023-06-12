@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".ui.main.profile.ProfileFragment">
 
 
     <com.makeramen.roundedimageview.RoundedImageView
@@ -67,12 +67,12 @@
             android:textColor="@color/white_pure" />
     </androidx.cardview.widget.CardView>
 
-    <com.c23ps105.prodify.ui.customview.TextViewCustom
+    <com.c23ps105.prodify.ui.customview.ProdifyTextView
         android:id="@+id/bookmark"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:text="@string/bookmark"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="@+id/card"
@@ -90,4 +90,13 @@
         app:layout_constraintTop_toBottomOf="@id/bookmark"
         app:spanCount="2"
         tools:listitem="@layout/item_staggered_grid" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

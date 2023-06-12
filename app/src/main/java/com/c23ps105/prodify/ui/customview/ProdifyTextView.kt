@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import com.c23ps105.prodify.R
 
 
-class TextViewCustom : AppCompatTextView {
+class ProdifyTextView : AppCompatTextView {
     private var txtColor: Int = 0
 
     constructor(context: Context) : super(context) {
@@ -33,6 +33,17 @@ class TextViewCustom : AppCompatTextView {
     }
 
     private fun init() {
-        txtColor = ContextCompat.getColor(context, R.color.black500)
+        val id = resources.getResourceEntryName(id)
+        txtColor = if (id.endsWith("_white")) ContextCompat.getColor(
+            context,
+            R.color.white_pure
+        ) else if (id.endsWith("_middle")) {
+            ContextCompat.getColor(
+                context,
+                R.color.black200
+            )
+        } else {
+            ContextCompat.getColor(context, R.color.black500)
+        }
     }
 }

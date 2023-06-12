@@ -2,11 +2,6 @@ package com.c23ps105.prodify.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductResponse(
-    @field:SerializedName("Response")
-    val productList: List<DetailProductResponse>
-)
-
 data class DetailProductResponse(
     @field:SerializedName("createdAt")
     val createdAt: String,
@@ -48,13 +43,4 @@ data class UploadProductResponse(
 
     @field:SerializedName("category")
     val category: String,
-)
-
-data class PredictResponse(
-
-    @field:SerializedName("description")
-    val description: String,
-
-    @field:SerializedName("title")
-    val title: String
 )

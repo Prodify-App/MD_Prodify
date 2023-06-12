@@ -1,18 +1,29 @@
 package com.c23ps105.prodify.utils
 
 import android.app.Application
-import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.net.Uri
-import android.os.Environment
 import android.util.Patterns
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.c23ps105.prodify.R
-import java.io.*
+import com.c23ps105.prodify.helper.ProductViewModelFactory
+import com.c23ps105.prodify.helper.SessionPreferences
+import com.c23ps105.prodify.ui.viewModel.ProductViewModel
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 private const val MAXIMAL_SIZE = 1000000
@@ -21,11 +32,6 @@ val timeStamp: String = SimpleDateFormat(
     FILENAME_FORMAT,
     Locale.US
 ).format(System.currentTimeMillis())
-
-fun createCustomTempFile(context: Context): File {
-    val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    return File.createTempFile(timeStamp, ".jpg", storageDir)
-}
 
 fun createFile(application: Application): File {
     val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
@@ -38,34 +44,15 @@ fun createFile(application: Application): File {
 
     return File(outputDirectory, "$timeStamp.jpg")
 }
+
 fun isEmailValid(email: CharSequence): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
-fun rotateFile(file: File, isBackCamera: Boolean = false) {
-    val matrix = Matrix()
-    val bitmap = BitmapFactory.decodeFile(file.path)
-    val rotation = if (isBackCamera) 90f else -90f
-    matrix.postRotate(rotation)
-    if (!isBackCamera) {
-        matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
-    }
-    val result = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    result.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(file))
-}
 
-fun uriToFile(selectedImg: Uri, context: Context): File {
-    val contentResolver: ContentResolver = context.contentResolver
-    val myFile = createCustomTempFile(context)
-
-    val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
-    val outputStream: OutputStream = FileOutputStream(myFile)
-    val buf = ByteArray(1024)
-    var len: Int
-    while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
-    outputStream.close()
-    inputStream.close()
-
-    return myFile
+fun categoryTextTransform(text: String): String {
+    return text.lowercase()
+        .split("_")
+        .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } }
 }
 
 fun reduceFileImage(file: File): File {
@@ -82,3 +69,18 @@ fun reduceFileImage(file: File): File {
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
 }
+
+fun textRequestBody(text: Any? = null): RequestBody {
+    return text.toString().toRequestBody("text/plain".toMediaType())
+}
+
+fun imageMultipart(file: File, requestName: String): MultipartBody.Part {
+    val requestImageFile = file.asRequestBody("image/*".toMediaType())
+    return MultipartBody.Part.createFormData(
+        requestName,
+        file.name,
+        requestImageFile
+    )
+}
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")

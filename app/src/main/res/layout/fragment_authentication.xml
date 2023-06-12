@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.c23ps105.prodify.ui.customview.TextViewCustom
+        <com.c23ps105.prodify.ui.customview.ProdifyTextView
             android:id="@+id/textViewM2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:text="@string/email_auth"
             android:textSize="24sp" />
 
-        <com.c23ps105.prodify.ui.customview.TextViewCustom
+        <com.c23ps105.prodify.ui.customview.ProdifyTextView
             android:id="@+id/textViewM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:text="@string/desc_auth"
             android:textSize="14sp" />
 
-        <com.c23ps105.prodify.ui.customview.EditTextField
+        <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="10dp" />
 
-        <com.c23ps105.prodify.ui.customview.EditTextField
+        <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:paddingEnd="10dp" />
     </LinearLayout>
 
-    <com.c23ps105.prodify.ui.customview.ButtonCustom
+    <com.c23ps105.prodify.ui.customview.ProdifyButton
         android:id="@+id/btn_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.c23ps105.prodify.ui.camera
+package com.c23ps105.prodify.ui.main.camera
 
 import android.content.Intent
 import android.os.Build
@@ -67,20 +67,21 @@ class CameraActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val intent = Intent(this@CameraActivity, CameraResultActivity::class.java)
-                    intent.putExtra("picture", photoFile)
-                    intent.putExtra(
-                        "isBackCamera",
-                        cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
-                    )
-                    intent.putExtra("result", CameraResultActivity.CAMERA_X_RESULT)
+                    Intent(this@CameraActivity, CameraResultActivity::class.java).also {
+                        it.putExtra(EXTRA_FILE, photoFile)
+                        it.putExtra(
+                            EXTRA_CAMERA_STATE,
+                            cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
+                        )
+                        it.putExtra(EXTRA_RESULT, 200)
+                        startActivity(it)
+                        finish()
+                    }
                     Toast.makeText(
                         this@CameraActivity,
                         "Berhasil mengambil gambar.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    startActivity(intent)
-                    finish()
                 }
             }
         )
@@ -139,5 +140,11 @@ class CameraActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+    }
+
+    companion object {
+        const val EXTRA_RESULT = "camera_x_result"
+        const val EXTRA_CAMERA_STATE = "isBackCamera"
+        const val EXTRA_FILE = "camera_file"
     }
 }

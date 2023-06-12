@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.c23ps105.prodify.R
 
 
-class ButtonCustom : AppCompatButton {
+class ProdifyButton : AppCompatButton {
     private lateinit var enabledBackground: Drawable
     private lateinit var disabledBackground: Drawable
     private var txtColor: Int = 0

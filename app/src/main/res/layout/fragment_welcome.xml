@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.c23ps105.prodify.ui.customview.ButtonCustom
+    <com.c23ps105.prodify.ui.customview.ProdifyButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.c23ps105.prodify.ui.customview.ButtonCustom
+            <com.c23ps105.prodify.ui.customview.ProdifyButton
                 android:id="@+id/btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/welcome_desc" />
 
-            <com.c23ps105.prodify.ui.customview.ButtonCustom
+            <com.c23ps105.prodify.ui.customview.ProdifyButton
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

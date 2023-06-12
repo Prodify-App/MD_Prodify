@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.c23ps105.prodify.R
 import com.c23ps105.prodify.utils.isEmailValid
 
-class EditTextField : AppCompatEditText {
+class ProdifyEditTextView : AppCompatEditText {
     private lateinit var customBackground: Drawable
     private var txtColor: Int = 0
     private var txtHintColor: Int = 0

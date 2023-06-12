@@ -3,6 +3,7 @@ package com.c23ps105.prodify.ui.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,10 @@ import com.c23ps105.prodify.R
 import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.databinding.ItemGridBinding
 
-class ProductAdapter(private val onClick: (ProductEntity) -> Unit) :
+class ProductAdapter(
+    private val onBookmarkClick: (ProductEntity) -> Unit,
+    private val onProductClick: (ProductEntity) -> Unit
+) :
     ListAdapter<ProductEntity, ProductAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,8 +27,28 @@ class ProductAdapter(private val onClick: (ProductEntity) -> Unit) :
         val product = getItem(position)
         holder.bind(product)
 
+        val icBookmark = holder.binding.icBookmark
+        if (product.isBookmarked) {
+            icBookmark.setImageDrawable(
+                ContextCompat.getDrawable(
+                    icBookmark.context,
+                    R.drawable.bookmarked
+                )
+            )
+        } else {
+            icBookmark.setImageDrawable(
+                ContextCompat.getDrawable(
+                    icBookmark.context,
+                    R.drawable.bookmark
+                )
+            )
+        }
+
+        icBookmark.setOnClickListener {
+            onBookmarkClick(product)
+        }
         holder.binding.root.setOnClickListener {
-            onClick(product)
+            onProductClick(product)
         }
     }
 

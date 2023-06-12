@@ -8,7 +8,7 @@ import com.c23ps105.prodify.di.Injection
 import com.c23ps105.prodify.ui.viewModel.ProductViewModel
 
 
-class ViewModelFactory(
+class ProductViewModelFactory(
     private val productRepository: ProductRepository,
     private val pref: SessionPreferences
 ) :
@@ -24,11 +24,11 @@ class ViewModelFactory(
 
     companion object {
         @Volatile
-        private var instance: ViewModelFactory? = null
+        private var instance: ProductViewModelFactory? = null
 
-        fun getInstance(context: Context, pref: SessionPreferences): ViewModelFactory =
+        fun getInstance(context: Context, pref: SessionPreferences): ProductViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideProductRepository(context, pref), pref)
+                instance ?: ProductViewModelFactory(Injection.provideProductRepository(context, pref), pref)
             }.also { instance = it }
     }
 }

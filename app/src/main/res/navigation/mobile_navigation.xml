@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.c23ps105.prodify.ui.home.HomeFragment"
+        android:name="com.c23ps105.prodify.ui.main.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/navigation_article"
-        android:name="com.c23ps105.prodify.ui.blogs.BlogsFragment"
+        android:name="com.c23ps105.prodify.ui.main.blogs.BlogsFragment"
         android:label="@string/title_blogs"
         tools:layout="@layout/fragment_blogs" >
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.c23ps105.prodify.ui.profile.ProfileFragment"
+        android:name="com.c23ps105.prodify.ui.main.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/navigation_result"
-        android:name="com.c23ps105.prodify.ui.result.ResultFragment"
+        android:name="com.c23ps105.prodify.ui.main.result.ResultFragment"
         android:label="result"
         tools:layout="@layout/fragment_result">
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/navigation_detail_result"
-        android:name="com.c23ps105.prodify.ui.detail.DetailResultFragment"
+        android:name="com.c23ps105.prodify.ui.main.detail.DetailResultFragment"
         android:label="DetailResult"
         tools:layout="@layout/fragment_detail_result"/>
 </navigation>

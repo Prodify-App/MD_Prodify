@@ -1,4 +1,4 @@
-package com.c23ps105.prodify.ui.blogs
+package com.c23ps105.prodify.ui.main.blogs
 
 import android.os.Bundle
 import android.view.LayoutInflater

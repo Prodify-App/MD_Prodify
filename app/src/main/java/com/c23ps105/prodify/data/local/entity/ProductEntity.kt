@@ -12,23 +12,23 @@ data class ProductEntity(
     val id: Int,
 
     @field:ColumnInfo("createdAt")
-    val createdAt: String,
+    val createdAt: String?= null,
 
     @field:ColumnInfo("updatedAt")
-    val updatedAt: String,
+    val updatedAt: String?= null,
 
     @field:ColumnInfo("title")
-    val title: String,
+    val title: String?= null,
 
     @field:ColumnInfo("category")
-    val category: String,
+    val category: String?= null,
 
     @field:ColumnInfo("description")
-    val description: String,
+    val description: String?= null,
 
     @field:ColumnInfo("imageURL")
-    val imageURL: String,
+    val imageURL: String?= null,
 
-    @field:ColumnInfo("Bookmarked")
-    val isBookmarked: Boolean,
+    @field:ColumnInfo("bookmarked")
+    var isBookmarked: Boolean,
 )
