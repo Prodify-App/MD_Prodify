@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -20,6 +21,7 @@ import com.c23ps105.prodify.utils.categoryTextTransform
 import com.c23ps105.prodify.utils.imageMultipart
 import com.c23ps105.prodify.utils.reduceFileImage
 import com.c23ps105.prodify.utils.textRequestBody
+import com.c23ps105.prodify.utils.Result
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -68,26 +70,26 @@ class CameraResultActivity : AppCompatActivity() {
             predictViewModel.setToastText("Classified Successfully : $categoryTransform ")
             binding.tvCategoryWhite.text = categoryTransform
 
-            val category = textRequestBody(categoryTransform)
+            val category = textRequestBody(predictedCategory)
             val imagePart = imageMultipart(file, "image")
-//            predictViewModel.predict(category, imagePart).observe(this) {
-//                when (it) {
-//                    is Result.Error -> {
-//                        binding.loading.visibility = View.GONE
-//                        predictViewModel.setToastText(it.error)
-//                    }
-//
-//                    Result.Loading -> {
-//                        binding.loading.visibility = View.VISIBLE
-//                    }
-//
-//                    is Result.Success -> {
-//                        binding.loading.visibility = View.GONE
-//                        binding.edtTitle.setText(it.data.first())
-//                        binding.edtDescription.setText(it.data.last())
-//                    }
-//                }
-//            }
+            predictViewModel.predict(category, imagePart).observe(this) {
+                when (it) {
+                    is Result.Error -> {
+                        binding.loading.visibility = View.GONE
+                        predictViewModel.setToastText(it.error)
+                    }
+
+                    Result.Loading -> {
+                        binding.loading.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+                        binding.loading.visibility = View.GONE
+                        binding.edtTitle.setText(it.data.first())
+                        binding.edtDescription.setText(it.data.last())
+                    }
+                }
+            }
         }
     }
 
