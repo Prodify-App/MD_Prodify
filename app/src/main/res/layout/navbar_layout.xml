@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="30dp"
+    android:paddingTop="30dp"
+    android:layout_marginBottom="30dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="30dp"
-        android:src="@drawable/avatar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.c23ps105.prodify.ui.customview.ProdifyTextView
         android:id="@+id/tv_user_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="@string/hello_user"
+        android:text="Halo, [Username] 👋"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
-        app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_height="26dp"
         android:contentDescription="@string/logo"
-        android:src="@drawable/group_36"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        android:src="@drawable/prodify_full"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
@@ -44,8 +36,7 @@
         android:queryHint="Search here..."
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@+id/avatar"
+        app:layout_constraintStart_toStartOf="@+id/tv_user_home"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:searchIcon="@drawable/search_alt_duotone_line" />
 </androidx.constraintlayout.widget.ConstraintLayout>

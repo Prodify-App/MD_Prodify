@@ -22,36 +22,48 @@
                 android:id="@+id/tv_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/history"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/navbar" />
 
+            <com.c23ps105.prodify.ui.customview.ProdifyTextView
+                android:id="@+id/tv_desc_history"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Lihat riwayat pembuatan produk kamu disini."
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_history"
+                app:layout_constraintStart_toStartOf="@+id/tv_history"
+                app:layout_constraintTop_toBottomOf="@+id/tv_history" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_home_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:layout_marginTop="12dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/tv_history"
-                app:layout_constraintTop_toBottomOf="@id/tv_history"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_desc_history"
                 tools:listitem="@layout/item_grid" />
 
             <com.c23ps105.prodify.ui.customview.ProdifyTextView
                 android:id="@+id/tv_blogs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/blogs_title"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_history"
-                app:layout_constraintStart_toStartOf="@+id/rv_home_history"
+                app:layout_constraintStart_toStartOf="@+id/tv_history"
                 app:layout_constraintTop_toBottomOf="@+id/rv_home_history" />
 
             <com.c23ps105.prodify.ui.customview.ProdifyTextView
@@ -68,7 +80,7 @@
                 android:id="@+id/rv_blogs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/tv_history"

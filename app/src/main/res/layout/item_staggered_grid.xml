@@ -2,67 +2,64 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="15dp"
-    app:cardCornerRadius="15dp">
+    android:elevation="0dp"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/offwhite">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_history"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius_bottom_left="15dp"
-            app:riv_corner_radius_top_left="15dp"
+            app:riv_corner_radius_bottom_left="8dp"
+            app:riv_corner_radius_top_left="8dp"
             tools:src="@tools:sample/avatars" />
 
         <com.c23ps105.prodify.ui.customview.ProdifyTextView
             android:id="@+id/tv_category_card_middle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
             android:ellipsize="end"
-            android:maxLines="1"
             android:lines="1"
-            android:text="@string/tv_category_item"
-            android:textColor="@color/black200"
+            android:maxLines="1"
+            android:text="Kategori"
+            android:textSize="12sp"
+            android:fontFamily="@font/monbold"
+            android:textColor="@color/black500"
             app:layout_constraintBottom_toTopOf="@id/tv_title"
-            app:layout_constraintEnd_toStartOf="@id/ic_bookmark"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_history" />
 
-        <ImageView
-            android:id="@+id/ic_bookmark"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/bookmark"
-            android:src="@drawable/bookmark"
-            app:layout_constraintBottom_toBottomOf="@id/tv_category_card_middle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_category_card_middle" />
 
         <com.c23ps105.prodify.ui.customview.ProdifyTextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginHorizontal="12dp"
             android:ellipsize="end"
             android:maxLines="3"
+            android:textSize="12sp"
             android:text="@string/tv_title_item"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/ic_bookmark"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_category_card_middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_category_card_middle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

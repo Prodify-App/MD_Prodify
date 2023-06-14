@@ -27,26 +27,26 @@ class ProductAdapter(
         val product = getItem(position)
         holder.bind(product)
 
-        val icBookmark = holder.binding.icBookmark
-        if (product.isBookmarked) {
-            icBookmark.setImageDrawable(
-                ContextCompat.getDrawable(
-                    icBookmark.context,
-                    R.drawable.bookmarked
-                )
-            )
-        } else {
-            icBookmark.setImageDrawable(
-                ContextCompat.getDrawable(
-                    icBookmark.context,
-                    R.drawable.bookmark
-                )
-            )
-        }
-
-        icBookmark.setOnClickListener {
-            onBookmarkClick(product)
-        }
+//        val icBookmark = holder.binding.icBookmark
+//        if (product.isBookmarked) {
+//            icBookmark.setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    icBookmark.context,
+//                    R.drawable.bookmarked
+//                )
+//            )
+//        } else {
+//            icBookmark.setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    icBookmark.context,
+//                    R.drawable.bookmark
+//                )
+//            )
+//        }
+//
+//        icBookmark.setOnClickListener {
+//            onBookmarkClick(product)
+//        }
         holder.binding.root.setOnClickListener {
             onProductClick(product)
         }
@@ -57,7 +57,7 @@ class ProductAdapter(
     ) {
         fun bind(product: ProductEntity) {
             binding.apply {
-                tvCategoryCard.text = product.category
+                tvCategoryCardMiddle.text = product.category
                 tvTitle.text = product.title
                 Glide.with(ivHistory).load(product.imageURL).placeholder(R.drawable.placeholder)
                     .into(ivHistory)
