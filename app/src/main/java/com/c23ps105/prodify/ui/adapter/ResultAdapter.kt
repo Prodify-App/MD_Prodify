@@ -28,26 +28,26 @@ class ResultAdapter(
         val product = getItem(position)
         holder.bind(product)
 
-        val icBookmark = holder.binding.icBookmark
-        if (product.isBookmarked) {
-            icBookmark.setImageDrawable(
-                ContextCompat.getDrawable(
-                    icBookmark.context,
-                    R.drawable.bookmarked
-                )
-            )
-        } else {
-            icBookmark.setImageDrawable(
-                ContextCompat.getDrawable(
-                    icBookmark.context,
-                    R.drawable.bookmark
-                )
-            )
-        }
-
-        icBookmark.setOnClickListener {
-            onBookmarkClick(product)
-        }
+//        val icBookmark = holder.binding.icBookmark
+//        if (product.isBookmarked) {
+//            icBookmark.setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    icBookmark.context,
+//                    R.drawable.bookmarked
+//                )
+//            )
+//        } else {
+//            icBookmark.setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    icBookmark.context,
+//                    R.drawable.bookmark
+//                )
+//            )
+//        }
+//
+//        icBookmark.setOnClickListener {
+//            onBookmarkClick(product)
+//        }
         holder.binding.root.setOnClickListener {
             onProductClick(product)
         }

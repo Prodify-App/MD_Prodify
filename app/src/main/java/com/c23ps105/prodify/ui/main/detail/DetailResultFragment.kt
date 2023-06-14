@@ -1,5 +1,8 @@
 package com.c23ps105.prodify.ui.main.detail
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +19,7 @@ import com.c23ps105.prodify.ui.main.home.HomeFragment
 import com.c23ps105.prodify.ui.viewModel.ProductViewModel
 import com.c23ps105.prodify.utils.Result
 import com.c23ps105.prodify.utils.dataStore
+import com.google.android.material.snackbar.Snackbar
 
 
 class DetailResultFragment : Fragment() {
@@ -60,6 +64,22 @@ class DetailResultFragment : Fragment() {
                             Glide.with(ivDetail).load(it.data.imageURL)
                                 .placeholder(R.drawable.placeholder)
                                 .into(ivDetail)
+
+                            icCopyTitle.setOnClickListener {
+                                val text = binding.tvTitle.text.toString()
+                                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val clip = ClipData.newPlainText("title", text)
+                                clipboard.setPrimaryClip(clip)
+                                Snackbar.make(binding.root, "Judul berhasil dicopy ke clipboard", Snackbar.LENGTH_SHORT).show()
+                            }
+
+                            icCopyDescription.setOnClickListener {
+                                val text = binding.tvDesc.text.toString()
+                                val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                val clip = ClipData.newPlainText("description", text)
+                                clipboard.setPrimaryClip(clip)
+                                Snackbar.make(binding.root, "Deskripsi berhasil dicopy ke clipboard", Snackbar.LENGTH_SHORT).show()
+                            }
 
                             icBookmark.setOnClickListener { _ ->
                                 if (it.data.isBookmarked) {

@@ -4,67 +4,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="15dp"
-    android:layout_marginBottom="15dp"
-    app:cardCornerRadius="15dp">
+    android:layout_gravity="center"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/offwhite"
-        android:paddingTop="35dp"
-        android:paddingBottom="25dp">
-
-        <ImageView
-            android:id="@+id/ic_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/bookmark"
-            android:padding="15dp"
-            android:src="@drawable/bookmark"
-            app:layout_constraintEnd_toStartOf="@+id/iv_history"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_history" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/offwhite">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_history"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ic_bookmark"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius_bottom_left="15dp"
-            app:riv_corner_radius_top_left="15dp"
+            app:riv_corner_radius_bottom_left="8dp"
+            app:riv_corner_radius_top_left="8dp"
             tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tv_category_card"
+        <com.c23ps105.prodify.ui.customview.ProdifyTextView
+            android:id="@+id/tv_category_card_middle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:lines="1"
-            android:textColor="@color/black200"
-            android:maxLines="1"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
             android:ellipsize="end"
-            android:textSize="15sp"
-            android:text="@string/tv_category_item"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="Kategori"
+            android:textSize="12sp"
+            android:fontFamily="@font/monbold"
+            android:textColor="@color/black500"
+            app:layout_constraintBottom_toTopOf="@id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_history" />
+
 
         <com.c23ps105.prodify.ui.customview.ProdifyTextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="14sp"
-            android:maxLines="3"
+            android:layout_marginBottom="12dp"
+            android:layout_marginHorizontal="12dp"
             android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="12sp"
             android:text="@string/tv_title_item"
-            app:layout_constraintEnd_toEndOf="@+id/tv_category_card"
-            app:layout_constraintHorizontal_bias="0.466"
-            app:layout_constraintStart_toStartOf="@+id/tv_category_card"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category_card" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_card_middle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginEnd="15dp"-->
+<!--    android:layout_marginBottom="15dp"-->
+<!--    app:cardCornerRadius="15dp">-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/offwhite"-->
+<!--        android:paddingTop="35dp"-->
+<!--        android:paddingBottom="25dp">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ic_bookmark"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:contentDescription="@string/bookmark"-->
+<!--            android:padding="15dp"-->
+<!--            android:src="@drawable/bookmark"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/iv_history"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/iv_history" />-->
+
+<!--        <com.makeramen.roundedimageview.RoundedImageView-->
+<!--            android:id="@+id/iv_history"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/ic_bookmark"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:riv_corner_radius_bottom_left="15dp"-->
+<!--            app:riv_corner_radius_top_left="15dp"-->
+<!--            tools:src="@tools:sample/avatars" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_category_card"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="20dp"-->
+<!--            android:lines="1"-->
+<!--            android:textColor="@color/black200"-->
+<!--            android:maxLines="1"-->
+<!--            android:ellipsize="end"-->
+<!--            android:textSize="15sp"-->
+<!--            android:text="@string/tv_category_item"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/iv_history" />-->
+
+<!--        <com.c23ps105.prodify.ui.customview.ProdifyTextView-->
+<!--            android:id="@+id/tv_title"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:textSize="14sp"-->
+<!--            android:maxLines="3"-->
+<!--            android:ellipsize="end"-->
+<!--            android:text="@string/tv_title_item"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/tv_category_card"-->
+<!--            app:layout_constraintHorizontal_bias="0.466"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/tv_category_card"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tv_category_card" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--</androidx.cardview.widget.CardView>-->

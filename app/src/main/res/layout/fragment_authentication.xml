@@ -18,52 +18,112 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.c23ps105.prodify.ui.customview.ProdifyTextView
-            android:id="@+id/textViewM2"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:paddingBottom="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp"
             android:text="@string/email_auth"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:fontFamily="@font/monsemibold"/>
 
         <com.c23ps105.prodify.ui.customview.ProdifyTextView
-            android:id="@+id/textViewM"
+            android:id="@+id/tv_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="60dp"
+            android:layout_marginBottom="32dp"
             android:text="@string/desc_auth"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/pnregular"/>
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black600"
+            android:fontFamily="@font/monsemibold"/>
 
         <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginBottom="20dp"
             android:hint="@string/hint_name"
             android:paddingStart="20dp"
-            android:paddingEnd="10dp" />
+            android:paddingEnd="10dp"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
+            android:fontFamily="@font/pnregular"/>
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black600"
+            android:fontFamily="@font/monsemibold"/>
 
         <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
             android:id="@+id/email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginBottom="20dp"
             android:hint="@string/hint_email"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
             android:inputType="textEmailAddress"
-            android:textSize="16sp" />
+            android:includeFontPadding="false"
+            android:textSize="14sp"
+            android:fontFamily="@font/pnregular"/>
 
-        <EditText
-            android:autofillHints="......"
-            android:id="@+id/password"
+        <TextView
+            android:id="@+id/tv_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Password"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black600"
+            android:fontFamily="@font/monsemibold"/>
+
+        <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
             android:layout_marginBottom="20dp"
             android:inputType="textPassword"
-            android:hint="@string/hint_password"
+            android:hint="Password"
             android:paddingStart="20dp"
-            android:paddingEnd="10dp" />
+            android:paddingEnd="10dp"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
+            android:fontFamily="@font/pnregular"/>
+
+        <TextView
+            android:id="@+id/tv_password_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi Password"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black600"
+            android:fontFamily="@font/monsemibold"
+            />
+
+        <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
+            android:id="@+id/password_confirmation"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="20dp"
+            android:inputType="textPassword"
+            android:hint="Konfirmasi Password"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
+            android:fontFamily="@font/pnregular"/>
     </LinearLayout>
 
     <com.c23ps105.prodify.ui.customview.ProdifyButton
@@ -72,6 +132,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="0dp"
         android:text="@string/logres"
+        android:includeFontPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -50,7 +51,15 @@ class AuthenticationFragment : Fragment() {
 
         when (state) {
             WelcomeFragment.LOGIN_STATE -> {
+                binding.tvUsername.visibility = View.GONE
                 binding.username.visibility = View.GONE
+
+                binding.tvPasswordConfirm.visibility = View.GONE
+                binding.passwordConfirmation.visibility = View.GONE
+
+                binding.tvTitle.text = "Selamat Datang Kembali \uD83D\uDC4B"
+                binding.tvSubtitle.text = "Kami senang melihat anda kembali! Silahkan masuk menggunakan email dan password akun anda \uD83D\uDE0A"
+
                 binding.btnContinue.setOnClickListener {
                     viewModel.login(
                         binding.email.text.toString(),
@@ -82,7 +91,10 @@ class AuthenticationFragment : Fragment() {
             }
 
             WelcomeFragment.REGISTER_STATE -> {
-                binding.username.visibility = View.VISIBLE
+
+                binding.tvTitle.text = "Daftar Akun ✍️"
+                binding.tvSubtitle.text = "Selamat datang di Prodify! Silahkan daftarkan akun anda menggunakan username, email, and password di halaman ini."
+
                 viewModel.getRegisterResult().observe(viewLifecycleOwner) {
                     when (it) {
                         null -> {
@@ -96,11 +108,16 @@ class AuthenticationFragment : Fragment() {
                 }
 
                 binding.btnContinue.setOnClickListener {
-                    viewModel.register(
-                        binding.username.text.toString(),
-                        binding.email.text.toString(),
-                        binding.password.text.toString()
-                    )
+                    if (binding.password.text.toString() != binding.passwordConfirmation.text.toString()) {
+                        viewModel.setToastText("Password dan Konfirmasi Password berbeda! Pastikan Konfirmasi Password sama dengan Password yang anda ketik")
+//                        Toast.makeText(activity, "Password and Password Confirmation is different! Please make sure you type password confirmation same as password", Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewModel.register(
+                            binding.username.text.toString(),
+                            binding.email.text.toString(),
+                            binding.password.text.toString()
+                        )
+                    }
                 }
             }
         }

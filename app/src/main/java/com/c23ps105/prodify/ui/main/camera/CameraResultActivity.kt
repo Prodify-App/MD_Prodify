@@ -1,9 +1,13 @@
 package com.c23ps105.prodify.ui.main.camera
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +41,8 @@ class CameraResultActivity : AppCompatActivity() {
     private lateinit var productViewModel: ProductViewModel
     private lateinit var predictViewModel: PredictViewModel
 
+    private lateinit var timer: CountDownTimer
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +64,22 @@ class CameraResultActivity : AppCompatActivity() {
                 productViewModel.postProduct(image, title, category, description)
             }
         }
+
+        binding.icCopyTitle.setOnClickListener {
+            val text = binding.edtTitle.text.toString()
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("title", text)
+            clipboard.setPrimaryClip(clip)
+            Snackbar.make(binding.root, "Judul berhasil dicopy ke clipboard", Snackbar.LENGTH_SHORT).show()
+        }
+
+        binding.icCopyDescription.setOnClickListener {
+            val text = binding.edtDescription.text.toString()
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("description", text)
+            clipboard.setPrimaryClip(clip)
+            Snackbar.make(binding.root, "Deskripsi berhasil dicopy ke clipboard", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun predict() {
@@ -72,6 +94,27 @@ class CameraResultActivity : AppCompatActivity() {
 
             val category = textRequestBody(predictedCategory)
             val imagePart = imageMultipart(file, "image")
+
+            var time = 60
+            timer = object : CountDownTimer(60_000, 1_000) {
+                override fun onTick(p0: Long) {
+                    time -= 1
+                    val minutes = time / 60
+                    val seconds = time % 60
+                    val text = String.format("%02d:%02d", minutes, seconds).chunked(1).joinToString(separator = " ")
+                    binding.tvCountdown.text = text
+                }
+
+                override fun onFinish() {
+                    binding.tvTitle.text = "Hasil lagi disiapin"
+                    binding.tvSubtitle.text = "Tunggu sebentar lagi ya, hasil judul dan deskripsi kamu bentar lagi ditulis nih."
+                    binding.tvCountdown.visibility = View.GONE
+                }
+
+            }
+
+            timer.start()
+
             predictViewModel.predict(category, imagePart).observe(this) {
                 when (it) {
                     is Result.Error -> {
@@ -115,6 +158,7 @@ class CameraResultActivity : AppCompatActivity() {
         predictViewModel = viewModels<PredictViewModel> { factory }.value
         predictViewModel.getToastText().observe(this) {
             it.getContentIfNotHandled()?.let { text ->
+                Log.d("snackbar", text)
                 Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
             }
         }

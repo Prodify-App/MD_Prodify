@@ -1,52 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quizcard"
+    app:cardPreventCornerOverlap="false"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="8dp"
+    android:layout_marginBottom="12dp"
+    android:layout_height="130dp">
+
+    <ImageView
+        android:id="@+id/iv_blogs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/avatars"/>
+
+    <View
+        android:id="@+id/gradient_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_overlay" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black500">
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iv_blogs"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/blogs_image"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius_bottom_right="15dp"
-            app:riv_corner_radius_top_right="15dp"
-            tools:src="@tools:sample/avatars" />
+        android:layout_height="match_parent"
+        android:padding="8dp">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
+            android:id="@+id/title_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="@string/blogs_text"
-            android:textColor="@color/offwhite"
-            android:textSize="35sp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_blogs"
-            app:layout_constraintEnd_toStartOf="@+id/iv_blogs"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_blogs" />
+            android:text="Blog Title"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/monsemibold"
+            app:layout_constraintBottom_toTopOf="@+id/subtitle_textview"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/subtitle_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:textColor="@color/offwhite"
+            android:text="13-06-2023"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:fontFamily="@font/pnregular"
+            android:includeFontPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/iv_blogs"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.cardview.widget.CardView>
+
+<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginBottom="10dp"-->
+<!--    app:cardCornerRadius="15dp">-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/black500">-->
+
+<!--        <com.makeramen.roundedimageview.RoundedImageView-->
+<!--            android:id="@+id/iv_blogs"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:contentDescription="@string/blogs_image"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:riv_corner_radius_bottom_right="15dp"-->
+<!--            app:riv_corner_radius_top_right="15dp"-->
+<!--            tools:src="@tools:sample/avatars" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="15dp"-->
+<!--            android:text="@string/blogs_text"-->
+<!--            android:textColor="@color/offwhite"-->
+<!--            android:textSize="35sp"-->
+<!--            android:ellipsize="end"-->
+<!--            android:maxLines="1"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/iv_blogs"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/iv_blogs"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/iv_blogs" />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/date"-->
+<!--            android:textColor="@color/offwhite"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/iv_blogs"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/textView"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--</androidx.cardview.widget.CardView>-->
