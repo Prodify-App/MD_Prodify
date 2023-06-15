@@ -41,12 +41,12 @@ class PredictRepository(
                         )
                     )
                 } else {
-                    predictResult.value = Result.Error("ups ! response unSuccessful")
+                    predictResult.value = Result.Error("Response Gagal!")
                 }
             }
 
             override fun onFailure(call: Call<PredictResponse>, t: Throwable) {
-                predictResult.value = Result.Error("ups ! Network Failure : ${t.message}")
+                predictResult.value = Result.Error("Gagal! Harap tunggu beberapa saat. Caused by : ${t.message}")
             }
         })
         return predictResult
