@@ -36,11 +36,6 @@ class DetailResultFragment : Fragment() {
     private var _binding: FragmentDetailResultBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        productDetail = arguments?.getParcelable<ProductEntity>(NEWS_DATA) as ProductEntity
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -90,10 +85,16 @@ class DetailResultFragment : Fragment() {
                         }
                     }
 
-                }
+                    productDetail =
+                        arguments?.getParcelable<ProductEntity>(NEWS_DATA) as ProductEntity
 
-                else -> {
-                    cat("null")
+                    bookmarkViewModel.setProductData(productDetail)
+                    bookmarkViewModel.bookmarkStatus.observe(viewLifecycleOwner) { status ->
+                        setBookmarkState(status)
+                    }
+                    binding.icBookmark.setOnClickListener {
+                        bookmarkViewModel.changeBookmark(productDetail)
+                    }
                 }
             }
         }
@@ -148,16 +149,6 @@ class DetailResultFragment : Fragment() {
             it.getContentIfNotHandled()?.let { text ->
                 Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
             }
-        }
-
-        bookmarkViewModel.setProductData(productDetail)
-
-        bookmarkViewModel.bookmarkStatus.observe(viewLifecycleOwner) { status ->
-            setBookmarkState(status)
-        }
-
-        binding.icBookmark.setOnClickListener {
-            bookmarkViewModel.changeBookmark(productDetail)
         }
     }
 

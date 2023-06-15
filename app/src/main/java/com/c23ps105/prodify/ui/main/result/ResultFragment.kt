@@ -17,6 +17,7 @@ import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
 import com.c23ps105.prodify.ui.main.dataStore
+import com.c23ps105.prodify.ui.main.detail.DetailResultFragment
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 import com.c23ps105.prodify.ui.viewModel.MainViewModel
 import com.c23ps105.prodify.utils.Result
@@ -72,6 +73,8 @@ class ResultFragment : Fragment() {
             val mBundle = Bundle().also {
                 it.putInt(EXTRA_ID, result.id)
                 it.putString(EXTRA_STATE, PRODUCT_STATE)
+                it.putParcelable(DetailResultFragment.NEWS_DATA, result)
+
             }
 
             findNavController().enableOnBackPressed(true)

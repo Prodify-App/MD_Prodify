@@ -18,6 +18,7 @@ import com.c23ps105.prodify.helper.AuthViewModelFactory
 import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
+import com.c23ps105.prodify.ui.main.detail.DetailResultFragment
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 import com.c23ps105.prodify.ui.viewModel.MainViewModel
 
@@ -37,12 +38,14 @@ class ProfileFragment : Fragment() {
 
         val productAdapter = ResultAdapter(
             onProductClick = { product ->
-                val mBundle = Bundle()
-                mBundle.putInt(EXTRA_ID, product.id)
-
+                val mBundle = Bundle().also {
+                    it.putString(EXTRA_STATE, PRODUCT_STATE)
+                    it.putInt(EXTRA_ID, product.id)
+                    it.putParcelable(DetailResultFragment.NEWS_DATA, product)
+                }
                 findNavController().enableOnBackPressed(true)
                 findNavController().navigate(
-                    R.id.action_navigation_home_to_navigation_detail_result, mBundle
+                    R.id.action_navigation_profile_to_navigation_detail_result, mBundle
                 )
             }
         )
@@ -89,5 +92,8 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val EXTRA_ID = "id"
+        private const val PRODUCT_STATE = "product"
+        private const val EXTRA_STATE = "state"
+
     }
 }
