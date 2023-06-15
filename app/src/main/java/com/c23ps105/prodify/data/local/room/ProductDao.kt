@@ -6,7 +6,7 @@ import com.c23ps105.prodify.data.local.entity.ProductEntity
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM products ORDER BY createdAt DESC")
+    @Query("SELECT * FROM products")
     fun getProducts(): LiveData<List<ProductEntity>>
 
     @Query("SELECT * FROM products WHERE id = :id")
@@ -26,4 +26,13 @@ interface ProductDao {
 
     @Query("SELECT * FROM products WHERE bookmarked = 1")
     fun getBookmarkedProduct(): LiveData<List<ProductEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun saveProduct(product: ProductEntity)
+
+    @Query("DELETE FROM products WHERE id = :productId")
+    suspend fun deleteProduct(productId: Int)
+
+    @Query("SELECT EXISTS(SELECT * FROM products WHERE id = :productId AND bookmarked = 1)")
+    fun isProductBookmarkAlready(productId: Int): LiveData<Boolean>
 }

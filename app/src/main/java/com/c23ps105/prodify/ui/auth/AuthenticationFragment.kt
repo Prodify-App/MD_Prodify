@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -14,10 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.databinding.FragmentAuthenticationBinding
-import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 import com.c23ps105.prodify.helper.AuthViewModelFactory
+import com.c23ps105.prodify.helper.SessionPreferences
+import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 import com.c23ps105.prodify.utils.Result
 import com.google.android.material.snackbar.Snackbar
 
@@ -36,7 +35,7 @@ class AuthenticationFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAuthenticationBinding.inflate(inflater, container, false)
 
@@ -58,7 +57,8 @@ class AuthenticationFragment : Fragment() {
                 binding.passwordConfirmation.visibility = View.GONE
 
                 binding.tvTitle.text = "Selamat Datang Kembali \uD83D\uDC4B"
-                binding.tvSubtitle.text = "Kami senang melihat anda kembali! Silahkan masuk menggunakan email dan password akun anda \uD83D\uDE0A"
+                binding.tvSubtitle.text =
+                    "Kami senang melihat anda kembali! Silahkan masuk menggunakan email dan password akun anda \uD83D\uDE0A"
 
                 binding.btnContinue.setOnClickListener {
                     viewModel.login(
@@ -72,8 +72,10 @@ class AuthenticationFragment : Fragment() {
                                 }
 
                                 is Result.Success -> {
-                                    viewModel.saveSettings(it.data.first())
-                                    viewModel.setToastText(it.data.last())
+                                    it.data.apply {
+                                        viewModel.saveSettings(id, accessToken, username, email)
+                                        viewModel.setToastText("Selamat datang kembali $username !")
+                                    }
 
                                     findNavController().navigate(R.id.action_authenticationFragment_to_mainActivity)
                                     requireActivity().finish()
@@ -93,7 +95,8 @@ class AuthenticationFragment : Fragment() {
             WelcomeFragment.REGISTER_STATE -> {
 
                 binding.tvTitle.text = "Daftar Akun ✍️"
-                binding.tvSubtitle.text = "Selamat datang di Prodify! Silahkan daftarkan akun anda menggunakan username, email, and password di halaman ini."
+                binding.tvSubtitle.text =
+                    "Selamat datang di Prodify! Silahkan daftarkan akun anda menggunakan username, email, and password di halaman ini."
 
                 viewModel.getRegisterResult().observe(viewLifecycleOwner) {
                     when (it) {
@@ -110,18 +113,23 @@ class AuthenticationFragment : Fragment() {
                 binding.btnContinue.setOnClickListener {
                     if (binding.password.text.toString() != binding.passwordConfirmation.text.toString()) {
                         viewModel.setToastText("Password dan Konfirmasi Password berbeda! Pastikan Konfirmasi Password sama dengan Password yang anda ketik")
-//                        Toast.makeText(activity, "Password and Password Confirmation is different! Please make sure you type password confirmation same as password", Toast.LENGTH_SHORT).show()
                     } else {
                         viewModel.register(
                             binding.username.text.toString(),
                             binding.email.text.toString(),
                             binding.password.text.toString()
                         )
+                        viewModel.getRegisterResult().observe(viewLifecycleOwner) {
+                            if (it == true) {
+                                viewModel.setToastText("Success !")
+                                findNavController().navigate(R.id.action_authenticationFragment_to_mainActivity)
+                                activity?.finish()
+                            }
+                        }
                     }
                 }
             }
         }
-
         return binding.root
     }
 

@@ -9,15 +9,14 @@ import com.c23ps105.prodify.data.remote.response.RegisterResponse
 import com.c23ps105.prodify.data.remote.retrofit.ApiService
 import com.c23ps105.prodify.utils.Event
 import com.c23ps105.prodify.utils.Result
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AuthRepository private constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) {
-    private val tokenResult = MediatorLiveData<Result<List<String>>>()
+    private val tokenResult = MediatorLiveData<Result<LoginResponse>>()
 
     private val _toastText = MutableLiveData<Event<String>>()
     val toastText: LiveData<Event<String>> = _toastText
@@ -25,25 +24,25 @@ class AuthRepository private constructor(
     private val _isRegistered = MutableLiveData<Boolean?>()
     val isRegistered: LiveData<Boolean?> = _isRegistered
 
-    fun getLoginResult(email: String, password: String): LiveData<Result<List<String>>> {
+    fun getLoginResult(email: String, password: String): LiveData<Result<LoginResponse>> {
         tokenResult.value = Result.Loading
 
         val login = apiService.login(email, password)
         login.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
-                response: Response<LoginResponse>
+                response: Response<LoginResponse>,
             ) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
                         tokenResult.value =
                             Result.Success(
-                                listOf(
+                                LoginResponse(
+                                    result.id,
                                     result.accessToken,
-                                    result.username,
                                     result.email,
-                                    "Success"
+                                    result.username
                                 )
                             )
                     } else {
@@ -72,7 +71,7 @@ class AuthRepository private constructor(
         register.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
+                response: Response<RegisterResponse>,
             ) {
                 val responseBody = response.body()
                 if (response.isSuccessful) {
@@ -107,7 +106,7 @@ class AuthRepository private constructor(
         @Volatile
         private var instance: AuthRepository? = null
         fun getInstance(
-            apiService: ApiService
+            apiService: ApiService,
         ): AuthRepository =
             instance ?: synchronized(this) {
                 instance ?: AuthRepository(apiService)

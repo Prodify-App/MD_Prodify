@@ -24,8 +24,8 @@ class AuthActivity : AppCompatActivity() {
         val pref = SessionPreferences.getInstance(dataStore)
         val factory = AuthViewModelFactory.getInstance(pref)
         val viewModel: AuthViewModel by viewModels { factory }
-        viewModel.getTokenSetting().observe(this) { token ->
-            if (!token.isNullOrEmpty()) {
+        viewModel.getPreferences().observe(this) { key ->
+            if (key.token.isNotEmpty()) {
                 Intent(this, MainActivity::class.java).also {
                     startActivity(it)
                     finish()

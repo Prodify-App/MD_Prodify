@@ -3,7 +3,6 @@ package com.c23ps105.prodify.ui.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +12,7 @@ import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.databinding.ItemStaggeredGridBinding
 
 class ResultAdapter(
-    private val onBookmarkClick: (ProductEntity) -> Unit,
-    private val onProductClick: (ProductEntity) -> Unit
+    private val onProductClick: (ProductEntity) -> Unit,
 ) :
     ListAdapter<ProductEntity, ResultAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
@@ -27,27 +25,6 @@ class ResultAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val product = getItem(position)
         holder.bind(product)
-
-//        val icBookmark = holder.binding.icBookmark
-//        if (product.isBookmarked) {
-//            icBookmark.setImageDrawable(
-//                ContextCompat.getDrawable(
-//                    icBookmark.context,
-//                    R.drawable.bookmarked
-//                )
-//            )
-//        } else {
-//            icBookmark.setImageDrawable(
-//                ContextCompat.getDrawable(
-//                    icBookmark.context,
-//                    R.drawable.bookmark
-//                )
-//            )
-//        }
-//
-//        icBookmark.setOnClickListener {
-//            onBookmarkClick(product)
-//        }
         holder.binding.root.setOnClickListener {
             onProductClick(product)
         }
@@ -71,7 +48,7 @@ class ResultAdapter(
             object : DiffUtil.ItemCallback<ProductEntity>() {
                 override fun areItemsTheSame(
                     oldItem: ProductEntity,
-                    newItem: ProductEntity
+                    newItem: ProductEntity,
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
@@ -79,7 +56,7 @@ class ResultAdapter(
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
                     oldItem: ProductEntity,
-                    newItem: ProductEntity
+                    newItem: ProductEntity,
                 ): Boolean {
                     return oldItem == newItem
                 }

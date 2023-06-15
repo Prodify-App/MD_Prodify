@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black600"
@@ -26,6 +27,7 @@
             android:text="@string/prodify" />
 
         <TextView
+            android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black600"

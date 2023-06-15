@@ -1,7 +1,7 @@
 package com.c23ps105.prodify.data.remote.retrofit
 
-import android.util.Log
 import com.c23ps105.prodify.helper.SessionPreferences
+import com.c23ps105.prodify.utils.cat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -18,12 +18,11 @@ object ApiConfig {
             .addInterceptor(loggingInterceptor)
             .addInterceptor { chain ->
                 val request = chain.request()
-                val tokenFlow = sessionPreference.getToken()
+                val tokenFlow = sessionPreference.getPreference()
 
-                val token = runBlocking { tokenFlow.first() }
-                Log.d("testing Config", token)
+                val preference = runBlocking { tokenFlow.first() }
                 val requestWithHeader = request.newBuilder()
-                    .header("Authorization", "Bearer $token")
+                    .header("Authorization", "Bearer ${preference.token}")
                     .build()
 
                 val response = chain.proceed(requestWithHeader)

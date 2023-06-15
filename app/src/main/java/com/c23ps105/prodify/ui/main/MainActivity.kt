@@ -22,22 +22,20 @@ import androidx.navigation.ui.setupWithNavController
 import com.c23ps105.prodify.R
 import com.c23ps105.prodify.databinding.ActivityMainBinding
 import com.c23ps105.prodify.helper.SessionPreferences
-import com.c23ps105.prodify.helper.ProductViewModelFactory
+import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.ui.main.camera.CameraActivity
-import com.c23ps105.prodify.ui.viewModel.ProductViewModel
+import com.c23ps105.prodify.ui.viewModel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: ProductViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-        setViewModel()
         setBottomAppBar()
 
         binding.fabPhotos.setOnClickListener {
@@ -71,14 +69,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-
-    private fun setViewModel() {
-        val pref = SessionPreferences.getInstance(dataStore)
-        val pFactory = ProductViewModelFactory.getInstance(this, pref)
-        viewModel = viewModels<ProductViewModel> { pFactory }.value
-
     }
 
     override fun onRequestPermissionsResult(

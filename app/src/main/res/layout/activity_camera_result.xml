@@ -24,9 +24,9 @@
                 android:id="@+id/img_camera_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/product_image"
                 android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -39,9 +39,9 @@
                 android:layout_marginTop="-80dp"
                 android:background="@drawable/detail_bg"
                 android:padding="30dp"
-                app:layout_constraintTop_toBottomOf="@+id/img_camera_result"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_camera_result">
 
                 <com.c23ps105.prodify.ui.customview.ProdifyTextView
                     android:id="@+id/tv_category_white"
@@ -67,10 +67,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Judul"
-                    android:textSize="18sp"
-                    android:textColor="@color/black200"
                     android:fontFamily="@font/monbold"
+                    android:text="Judul"
+                    android:textColor="@color/black200"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/tv_category_white"
                     app:layout_constraintTop_toBottomOf="@id/tv_category_white" />
 
@@ -89,11 +89,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pnregular"
-                    android:textColor="@color/black600"
-                    android:inputType="textMultiLine"
-                    android:textSize="14sp"
                     android:hint="Product Title"
+                    android:inputType="textMultiLine"
                     android:paddingHorizontal="0dp"
+                    android:textColor="@color/black600"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title" />
@@ -104,9 +104,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:textColor="@color/black200"
                     android:fontFamily="@font/monbold"
                     android:text="Deksripsi"
+                    android:textColor="@color/black200"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/edt_title"
                     app:layout_constraintTop_toBottomOf="@id/edt_title" />
@@ -126,11 +126,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pnregular"
-                    android:textColor="@color/black600"
-                    android:inputType="textMultiLine"
-                    android:textSize="14sp"
                     android:hint="Product Description"
+                    android:inputType="textMultiLine"
                     android:paddingHorizontal="0dp"
+                    android:textColor="@color/black600"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/desc_title" />
@@ -149,9 +149,9 @@
         android:background="@color/offwhite"
         android:paddingHorizontal="30dp"
         android:paddingVertical="30dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.c23ps105.prodify.ui.customview.ProdifyButton
             android:id="@+id/btn_finalize"
@@ -168,9 +168,9 @@
         android:layout_height="match_parent"
         android:background="@color/white_pure"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="vertical"
         android:padding="30dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -179,46 +179,54 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="-150dp"
-            app:lottie_rawRes="@raw/loading_animation"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"/>
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading_animation" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-150dp"
+            android:fontFamily="@font/monbold"
             android:text="Prodify Lagi Mikir"
             android:textAlignment="center"
-            android:fontFamily="@font/monbold"
             android:textColor="@color/black600"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:fontFamily="@font/pnregular"
             android:text="Sebentar ya, Prodify lagi mikirin judul dan deskripsi terbaik untuk produk kamu."
             android:textAlignment="center"
-            android:fontFamily="@font/pnregular"
             android:textColor="@color/black200"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
             android:background="@drawable/custom_edit_text"
+            android:fontFamily="@font/monbold"
             android:paddingHorizontal="18dp"
             android:paddingVertical="10dp"
-            android:layout_marginTop="48dp"
             android:text=" 0 1 : 0 0 "
             android:textAlignment="center"
-            android:fontFamily="@font/monbold"
             android:textColor="@color/black600"
-            android:textSize="32sp"/>
+            android:textSize="32sp" />
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

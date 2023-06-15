@@ -13,7 +13,6 @@ import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.databinding.ItemGridBinding
 
 class ProductAdapter(
-    private val onBookmarkClick: (ProductEntity) -> Unit,
     private val onProductClick: (ProductEntity) -> Unit
 ) :
     ListAdapter<ProductEntity, ProductAdapter.MyViewHolder>(DIFF_CALLBACK) {
@@ -27,26 +26,6 @@ class ProductAdapter(
         val product = getItem(position)
         holder.bind(product)
 
-//        val icBookmark = holder.binding.icBookmark
-//        if (product.isBookmarked) {
-//            icBookmark.setImageDrawable(
-//                ContextCompat.getDrawable(
-//                    icBookmark.context,
-//                    R.drawable.bookmarked
-//                )
-//            )
-//        } else {
-//            icBookmark.setImageDrawable(
-//                ContextCompat.getDrawable(
-//                    icBookmark.context,
-//                    R.drawable.bookmark
-//                )
-//            )
-//        }
-//
-//        icBookmark.setOnClickListener {
-//            onBookmarkClick(product)
-//        }
         holder.binding.root.setOnClickListener {
             onProductClick(product)
         }

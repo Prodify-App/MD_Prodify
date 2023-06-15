@@ -1,10 +1,12 @@
 package com.c23ps105.prodify.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 @Entity(tableName = "products")
 data class ProductEntity(
     @field:ColumnInfo("id")
@@ -31,4 +33,4 @@ data class ProductEntity(
 
     @field:ColumnInfo("bookmarked")
     var isBookmarked: Boolean,
-)
+) : Parcelable

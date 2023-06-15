@@ -15,30 +15,33 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.c23ps105.prodify.databinding.ActivityCameraResultBinding
+import com.c23ps105.prodify.helper.AuthViewModelFactory
+import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.helper.PredictViewModelFactory
 import com.c23ps105.prodify.helper.SessionPreferences
-import com.c23ps105.prodify.helper.ProductViewModelFactory
 import com.c23ps105.prodify.tflite.Classifier
+import com.c23ps105.prodify.ui.viewModel.AuthViewModel
+import com.c23ps105.prodify.ui.viewModel.MainViewModel
 import com.c23ps105.prodify.ui.viewModel.PredictViewModel
-import com.c23ps105.prodify.ui.viewModel.ProductViewModel
+import com.c23ps105.prodify.utils.Result
 import com.c23ps105.prodify.utils.categoryTextTransform
 import com.c23ps105.prodify.utils.imageMultipart
 import com.c23ps105.prodify.utils.reduceFileImage
 import com.c23ps105.prodify.utils.textRequestBody
-import com.c23ps105.prodify.utils.Result
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class CameraResultActivity : AppCompatActivity() {
+    private var idUser: Int? = null
     private var getFile: File? = null
     private var result: Int? = null
 
     private lateinit var classifier: Classifier
     private lateinit var binding: ActivityCameraResultBinding
 
-    private lateinit var productViewModel: ProductViewModel
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var predictViewModel: PredictViewModel
 
     private lateinit var timer: CountDownTimer
@@ -61,7 +64,11 @@ class CameraResultActivity : AppCompatActivity() {
                 val title = textRequestBody(binding.edtTitle.text)
                 val category = textRequestBody(binding.tvCategoryWhite.text)
                 val description = textRequestBody(binding.edtDescription.text)
-                productViewModel.postProduct(image, title, category, description)
+                val userId = textRequestBody(idUser)
+                mainViewModel.postProduct(image, title, category, description, userId)
+                    .observe(this) { text ->
+                        predictViewModel.setToastText(text)
+                    }
             }
         }
 
@@ -70,7 +77,7 @@ class CameraResultActivity : AppCompatActivity() {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("title", text)
             clipboard.setPrimaryClip(clip)
-            Snackbar.make(binding.root, "Judul berhasil dicopy ke clipboard", Snackbar.LENGTH_SHORT).show()
+            predictViewModel.setToastText("Judul berhasil dicopy ke clipboard")
         }
 
         binding.icCopyDescription.setOnClickListener {
@@ -78,7 +85,7 @@ class CameraResultActivity : AppCompatActivity() {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("description", text)
             clipboard.setPrimaryClip(clip)
-            Snackbar.make(binding.root, "Deskripsi berhasil dicopy ke clipboard", Snackbar.LENGTH_SHORT).show()
+            predictViewModel.setToastText("Deskripsi berhasil dicopy ke clipboard")
         }
     }
 
@@ -101,13 +108,15 @@ class CameraResultActivity : AppCompatActivity() {
                     time -= 1
                     val minutes = time / 60
                     val seconds = time % 60
-                    val text = String.format("%02d:%02d", minutes, seconds).chunked(1).joinToString(separator = " ")
+                    val text = String.format("%02d:%02d", minutes, seconds).chunked(1)
+                        .joinToString(separator = " ")
                     binding.tvCountdown.text = text
                 }
 
                 override fun onFinish() {
                     binding.tvTitle.text = "Hasil lagi disiapin"
-                    binding.tvSubtitle.text = "Tunggu sebentar lagi ya, hasil judul dan deskripsi kamu bentar lagi ditulis nih."
+                    binding.tvSubtitle.text =
+                        "Tunggu sebentar lagi ya, hasil judul dan deskripsi kamu bentar lagi ditulis nih."
                     binding.tvCountdown.visibility = View.GONE
                 }
 
@@ -152,6 +161,7 @@ class CameraResultActivity : AppCompatActivity() {
     }
 
     private fun setViewModel() {
+        binding.progressBar.visibility = View.GONE
         result = intent.getIntExtra(CameraActivity.EXTRA_RESULT, 0)
 
         val factory = PredictViewModelFactory.getInstance()
@@ -164,8 +174,14 @@ class CameraResultActivity : AppCompatActivity() {
         }
 
         val pref = SessionPreferences.getInstance(dataStore)
-        val productFactory = ProductViewModelFactory.getInstance(this, pref)
-        productViewModel = viewModels<ProductViewModel> { productFactory }.value
+        val productFactory = MainViewModelFactory.getInstance(this, pref)
+        mainViewModel = viewModels<MainViewModel> { productFactory }.value
+
+        val aFactory = AuthViewModelFactory.getInstance(pref)
+        val authViewModel = viewModels<AuthViewModel> { aFactory }.value
+        authViewModel.getPreferences().observe(this) {
+            idUser = it.userId
+        }
     }
 
     companion object {

@@ -1,19 +1,14 @@
 package com.c23ps105.prodify.utils
 
 import android.app.Application
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.util.Patterns
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.helper.ProductViewModelFactory
-import com.c23ps105.prodify.helper.SessionPreferences
-import com.c23ps105.prodify.ui.viewModel.ProductViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -24,6 +19,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
+
+inline fun <reified T> T.cat(message: Any?) =
+    Log.i("CatLog ${T::class.java.simpleName}", message.toString())
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 private const val MAXIMAL_SIZE = 1000000
@@ -74,6 +72,10 @@ fun textRequestBody(text: Any? = null): RequestBody {
     return text.toString().toRequestBody("text/plain".toMediaType())
 }
 
+fun number(text: Any? = null): RequestBody {
+    return text.toString().toRequestBody("text/plain".toMediaType())
+}
+
 fun imageMultipart(file: File, requestName: String): MultipartBody.Part {
     val requestImageFile = file.asRequestBody("image/*".toMediaType())
     return MultipartBody.Part.createFormData(
@@ -83,4 +85,9 @@ fun imageMultipart(file: File, requestName: String): MultipartBody.Part {
     )
 }
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+fun String.toClipboard(requireActivity: Context, label: String) {
+    val clipboard =
+        requireActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText(label, this)
+    clipboard.setPrimaryClip(clip)
+}

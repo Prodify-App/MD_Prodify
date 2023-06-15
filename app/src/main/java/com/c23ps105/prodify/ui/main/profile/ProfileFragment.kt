@@ -15,39 +15,30 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.c23ps105.prodify.R
 import com.c23ps105.prodify.databinding.FragmentProfileBinding
 import com.c23ps105.prodify.helper.AuthViewModelFactory
-import com.c23ps105.prodify.helper.ProductViewModelFactory
+import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.helper.SessionPreferences
-import com.c23ps105.prodify.ui.adapter.ProductAdapter
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
-import com.c23ps105.prodify.ui.main.home.HomeFragment
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
-import com.c23ps105.prodify.ui.viewModel.ProductViewModel
+import com.c23ps105.prodify.ui.viewModel.MainViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private lateinit var authViewModel: AuthViewModel
-    private lateinit var productViewModel: ProductViewModel
+    private lateinit var mainViewModel: MainViewModel
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         setViewModel()
 
         val productAdapter = ResultAdapter(
-            onBookmarkClick = { bookmark ->
-                if (bookmark.isBookmarked) {
-                    productViewModel.unBookmarkProduct(bookmark)
-                } else {
-                    productViewModel.bookmarkProduct(bookmark)
-                }
-            },
             onProductClick = { product ->
                 val mBundle = Bundle()
-                mBundle.putInt(HomeFragment.EXTRA_ID, product.id)
+                mBundle.putInt(EXTRA_ID, product.id)
 
                 findNavController().enableOnBackPressed(true)
                 findNavController().navigate(
@@ -56,7 +47,7 @@ class ProfileFragment : Fragment() {
             }
         )
 
-        productViewModel.getBookmarkedProduct().observe(viewLifecycleOwner) {
+        mainViewModel.getBookmarkedProduct().observe(viewLifecycleOwner) {
             binding.progressBar.visibility = View.GONE
             productAdapter.submitList(it)
         }
@@ -76,15 +67,27 @@ class ProfileFragment : Fragment() {
 
         binding.icLogout.setOnClickListener {
             authViewModel.deleteSettings()
+            findNavController().navigate(R.id.action_navigation_profile_to_authActivity2)
             requireActivity().finish()
         }
 
-        val pFactory = ProductViewModelFactory.getInstance(requireContext(), pref)
-        productViewModel = viewModels<ProductViewModel> { pFactory }.value
+        authViewModel.getPreferences().observe(viewLifecycleOwner) {
+            binding.username.text =
+                getString(R.string.prodify).replace("Prodify", it.username)
+            binding.email.text =
+                getString(R.string.email_prodify).replace("Prodiy@example.com", it.email)
+        }
+
+        val pFactory = MainViewModelFactory.getInstance(requireContext(), pref)
+        mainViewModel = viewModels<MainViewModel> { pFactory }.value
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val EXTRA_ID = "id"
     }
 }

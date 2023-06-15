@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.sample.CardDataClass
+import com.c23ps105.prodify.data.remote.response.BlogsItem
 import com.c23ps105.prodify.databinding.ItemLinearBinding
 
-class BlogsAdapter(private val onClick: (CardDataClass) -> Unit) :
-    ListAdapter<CardDataClass, BlogsAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class BlogsAdapter(private val onClick: (BlogsItem) -> Unit) :
+    ListAdapter<BlogsItem, BlogsAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemLinearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,39 +20,40 @@ class BlogsAdapter(private val onClick: (CardDataClass) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val pokemon = getItem(position)
-        holder.bind(pokemon)
+        val blog = getItem(position)
+        holder.bind(blog)
 
         holder.binding.root.setOnClickListener {
-            onClick(pokemon)
+            onClick(blog)
         }
     }
 
     inner class MyViewHolder(val binding: ItemLinearBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(pokemon: CardDataClass) {
+        fun bind(blog: BlogsItem) {
             binding.apply {
-                Glide.with(binding.root).load(pokemon.imgData).placeholder(R.drawable.placeholder)
+                Glide.with(ivBlogs).load(blog.imageURL).placeholder(R.drawable.placeholder)
                     .into(ivBlogs)
+                titleTextview.text = blog.title
             }
         }
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<CardDataClass> =
-            object : DiffUtil.ItemCallback<CardDataClass>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<BlogsItem> =
+            object : DiffUtil.ItemCallback<BlogsItem>() {
                 override fun areItemsTheSame(
-                    oldItem: CardDataClass,
-                    newItem: CardDataClass
+                    oldItem: BlogsItem,
+                    newItem: BlogsItem,
                 ): Boolean {
-                    return oldItem.titleData == newItem.titleData
+                    return oldItem.blogId == newItem.blogId
                 }
 
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
-                    oldItem: CardDataClass,
-                    newItem: CardDataClass
+                    oldItem: BlogsItem,
+                    newItem: BlogsItem,
                 ): Boolean {
                     return oldItem == newItem
                 }

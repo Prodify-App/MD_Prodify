@@ -37,7 +37,6 @@
     <string name="add_widget">addWidget</string>
     <string name="btn_shite">white</string>
     <string name="gray">gray</string>
-    <string name="hello_user">Hello, User !</string>
     <string name="logres">Continue\n</string>
     <string name="capture_product">Capture the product</string>
     <string name="preview_image">preview image</string>
@@ -59,4 +58,5 @@
     <string name="Description">Description</string>
     <string name="blogs_text">Klik Disini !</string>
     <string name="date">25/5/2023\n</string>
+    <string name="greetings"> Halo, {z} 👋 </string>
 </resources>
