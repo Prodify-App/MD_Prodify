@@ -36,7 +36,8 @@ class PredictRepository(
                     predictResult.value = Result.Success(
                         listOf(
                             body?.title.toString(),
-                            body?.description.toString()
+                            body?.description.toString(),
+                            body?.error.toString()
                         )
                     )
                 } else {

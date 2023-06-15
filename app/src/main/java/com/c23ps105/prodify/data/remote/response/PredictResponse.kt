@@ -6,5 +6,7 @@ data class PredictResponse(
     @field:SerializedName("title")
     val title: String,
     @field:SerializedName("description")
-    val description: String
+    val description: String,
+    @field:SerializedName("error")
+    val error: String
 )

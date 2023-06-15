@@ -137,8 +137,9 @@ class CameraResultActivity : AppCompatActivity() {
 
                     is Result.Success -> {
                         binding.loading.visibility = View.GONE
-                        binding.edtTitle.setText(it.data.first())
-                        binding.edtDescription.setText(it.data.last())
+                        binding.edtTitle.setText(it.data[0])
+                        binding.edtDescription.setText(it.data[1])
+                        Log.d("Predict Error", it.data[2])
                     }
                 }
             }

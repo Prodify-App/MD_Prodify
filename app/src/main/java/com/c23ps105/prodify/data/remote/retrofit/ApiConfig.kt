@@ -40,13 +40,13 @@ object ApiConfig {
 
     fun getPredictService(): ApiPredictService {
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.MINUTES)
-            .readTimeout(5, TimeUnit.MINUTES)
-            .writeTimeout(5, TimeUnit.MINUTES)
+            .connectTimeout(2, TimeUnit.MINUTES)
+            .readTimeout(2, TimeUnit.MINUTES)
+            .writeTimeout(2, TimeUnit.MINUTES)
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("http://34.126.100.174:8080/")
+            .baseUrl("http://34.143.157.187:5000/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
