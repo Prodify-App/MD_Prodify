@@ -1,5 +1,7 @@
 # Prodify Mobile App
 Capstone project Bangkit 2023 
+![Prodify](https://github.com/Prodify-App/MD_Prodify/blob/4705b42db04a684130ac1cb2e483e465f1465caa/C23-PS105%20Presentation.jpg)
+
 ## About Our App
 Prodify is application for Generating Product Titles and Descriptions.
 
