@@ -52,18 +52,15 @@ class AuthenticationFragment : Fragment() {
             WelcomeFragment.LOGIN_STATE -> {
                 binding.tvUsername.visibility = View.GONE
                 binding.username.visibility = View.GONE
-
                 binding.tvPasswordConfirm.visibility = View.GONE
-                binding.passwordConfirmation.visibility = View.GONE
-
-                binding.tvTitle.text = "Selamat Datang Kembali \uD83D\uDC4B"
-                binding.tvSubtitle.text =
-                    "Kami senang melihat anda kembali! Silahkan masuk menggunakan email dan password akun anda \uD83D\uDE0A"
+                binding.passwordConfirmation.passwords.visibility = View.GONE
+                binding.tvTitle.text = getString(R.string.welcome_login)
+                binding.tvSubtitle.text = getString(R.string.welcome_login_sub)
 
                 binding.btnContinue.setOnClickListener {
                     viewModel.login(
                         binding.email.text.toString(),
-                        binding.password.text.toString()
+                        binding.passwords.passwords.text.toString()
                     ).observe(viewLifecycleOwner) {
                         if (it != null) {
                             when (it) {
@@ -94,9 +91,8 @@ class AuthenticationFragment : Fragment() {
 
             WelcomeFragment.REGISTER_STATE -> {
 
-                binding.tvTitle.text = "Daftar Akun ✍️"
-                binding.tvSubtitle.text =
-                    "Selamat datang di Prodify! Silahkan daftarkan akun anda menggunakan username, email, and password di halaman ini."
+                binding.tvTitle.text = getString(R.string.welcome_register)
+                binding.tvSubtitle.text = getString(R.string.welcome_register_sub)
 
                 viewModel.getRegisterResult().observe(viewLifecycleOwner) {
                     when (it) {
@@ -111,19 +107,27 @@ class AuthenticationFragment : Fragment() {
                 }
 
                 binding.btnContinue.setOnClickListener {
-                    if (binding.password.text.toString() != binding.passwordConfirmation.text.toString()) {
+                    if (binding.passwords.passwords.text.toString() != binding.passwordConfirmation.passwords.text.toString()) {
                         viewModel.setToastText("Password dan Konfirmasi Password berbeda! Pastikan Konfirmasi Password sama dengan Password yang anda ketik")
                     } else {
                         viewModel.register(
                             binding.username.text.toString(),
                             binding.email.text.toString(),
-                            binding.password.text.toString()
+                            binding.passwords.passwords.text.toString()
                         )
                         viewModel.getRegisterResult().observe(viewLifecycleOwner) {
                             if (it == true) {
-                                viewModel.setToastText("Success !")
-                                findNavController().navigate(R.id.action_authenticationFragment_to_mainActivity)
-                                activity?.finish()
+                                viewModel.setToastText("Berhasil membuat akun !")
+                                val mBundle = Bundle().also {
+                                    it.putString(
+                                        WelcomeFragment.EXTRA_STATE,
+                                        WelcomeFragment.LOGIN_STATE
+                                    )
+                                }
+                                findNavController().navigate(
+                                    R.id.action_authenticationFragment_self,
+                                    mBundle
+                                )
                             }
                         }
                     }

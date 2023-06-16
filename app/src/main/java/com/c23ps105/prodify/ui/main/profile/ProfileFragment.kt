@@ -17,6 +17,7 @@ import com.c23ps105.prodify.databinding.FragmentProfileBinding
 import com.c23ps105.prodify.helper.AuthViewModelFactory
 import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.helper.SessionPreferences
+import com.c23ps105.prodify.ui.adapter.ProductAdapter
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
 import com.c23ps105.prodify.ui.main.detail.DetailResultFragment
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
@@ -36,7 +37,7 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         setViewModel()
 
-        val productAdapter = ResultAdapter(
+        val productAdapter = ProductAdapter(
             onProductClick = { product ->
                 val mBundle = Bundle().also {
                     it.putString(EXTRA_STATE, PRODUCT_STATE)

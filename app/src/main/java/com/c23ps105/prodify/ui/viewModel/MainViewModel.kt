@@ -9,19 +9,21 @@ class MainViewModel(
     private val productRepository: ProductRepository,
 ) : ViewModel() {
     fun getBlogs() = productRepository.getBlogs()
+
     fun getBlogsById(id: Int) = productRepository.getBlogsDetail(id)
     fun getProductList() = productRepository.getProductList()
+    fun getUserProductList(idUser: Int) = productRepository.getUserProduct(idUser)
     fun postProduct(
         image: MultipartBody.Part,
         title: RequestBody,
         category: RequestBody,
         description: RequestBody,
-        idUser:RequestBody
-    ) = productRepository.postProduct(image, title, category, description,idUser)
+        idUser: RequestBody,
+    ) = productRepository.postProduct(image, title, category, description, idUser)
 
     fun getProductDetail(id: Int) = productRepository.getProductDetail(id)
     fun getBookmarkedProduct() = productRepository.getBookmarkedProduct()
 
-    fun setToastText(text:String) = productRepository.setToastText(text)
+    fun setToastText(text: String) = productRepository.setToastText(text)
     fun getToastText() = productRepository.toastText
 }

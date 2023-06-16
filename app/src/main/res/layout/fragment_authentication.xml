@@ -23,125 +23,106 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/monsemibold"
             android:text="@string/email_auth"
-            android:textSize="24sp"
-            android:fontFamily="@font/monsemibold"/>
+            android:textSize="24sp" />
 
         <com.c23ps105.prodify.ui.customview.ProdifyTextView
             android:id="@+id/tv_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="@string/desc_auth"
-            android:textSize="14sp"
+            android:fontFamily="@font/pnregular"
             android:includeFontPadding="false"
-            android:fontFamily="@font/pnregular"/>
+            android:text="@string/desc_auth"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/black600"
-            android:fontFamily="@font/monsemibold"/>
+            android:fontFamily="@font/monsemibold"
+            android:text="@string/username"
+            android:textColor="@color/black600" />
 
         <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/pnregular"
             android:hint="@string/hint_name"
+            android:includeFontPadding="false"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
-            android:includeFontPadding="false"
-            android:textSize="14sp"
-            android:fontFamily="@font/pnregular"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/black600"
-            android:fontFamily="@font/monsemibold"/>
+            android:fontFamily="@font/monsemibold"
+            android:text="Email"
+            android:textColor="@color/black600" />
 
         <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/pnregular"
             android:hint="@string/hint_email"
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
-            android:inputType="textEmailAddress"
-            android:includeFontPadding="false"
-            android:textSize="14sp"
-            android:fontFamily="@font/pnregular"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/black600"
-            android:fontFamily="@font/monsemibold"/>
+            android:fontFamily="@font/monsemibold"
+            android:text="@string/password"
+            android:textColor="@color/black600" />
 
-        <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:inputType="textPassword"
-            android:hint="Password"
-            android:paddingStart="20dp"
-            android:paddingEnd="10dp"
-            android:includeFontPadding="false"
-            android:textSize="14sp"
-            android:fontFamily="@font/pnregular"/>
+        <include
+            android:id="@+id/passwords"
+            layout="@layout/prodify_password_edit_text" />
 
         <TextView
             android:id="@+id/tv_password_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Konfirmasi Password"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/black600"
             android:fontFamily="@font/monsemibold"
-            />
+            android:text="@string/pass_confirmation"
+            android:textColor="@color/black600" />
 
-        <com.c23ps105.prodify.ui.customview.ProdifyEditTextView
+        <include
             android:id="@+id/password_confirmation"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp"
-            android:inputType="textPassword"
-            android:hint="Konfirmasi Password"
-            android:paddingStart="20dp"
-            android:paddingEnd="10dp"
-            android:includeFontPadding="false"
-            android:textSize="14sp"
-            android:fontFamily="@font/pnregular"/>
+            layout="@layout/prodify_password_edit_text" />
     </LinearLayout>
 
     <com.c23ps105.prodify.ui.customview.ProdifyButton
         android:id="@+id/btn_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:includeFontPadding="false"
         android:paddingBottom="0dp"
         android:text="@string/logres"
-        android:includeFontPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,7 +11,9 @@ import com.c23ps105.prodify.data.remote.response.BlogsItem
 import com.c23ps105.prodify.data.remote.response.BlogsResponse
 import com.c23ps105.prodify.data.remote.response.ProductResponse
 import com.c23ps105.prodify.data.remote.response.ProductsItem
+import com.c23ps105.prodify.data.remote.response.ProductsUserItem
 import com.c23ps105.prodify.data.remote.response.UploadProductResponse
+import com.c23ps105.prodify.data.remote.response.UserProductResponse
 import com.c23ps105.prodify.data.remote.retrofit.ApiService
 import com.c23ps105.prodify.utils.AppExecutors
 import com.c23ps105.prodify.utils.Event
@@ -30,9 +32,10 @@ class ProductRepository private constructor(
     private val appExecutors: AppExecutors,
 ) {
     private val productResult = MediatorLiveData<Result<List<ProductEntity>>>()
+    private val productsUserResult = MediatorLiveData<Result<List<ProductsUserItem>>>()
 
     private val productDetailResult = MediatorLiveData<Result<DetailUserModel>>()
-    private val postProductResult = MutableLiveData<String>()
+    private val postProductResult = MutableLiveData<Result<String>>()
 
     private val blogResult = MediatorLiveData<Result<List<BlogsItem>>>()
     private val blogDetailResult = MediatorLiveData<Result<BlogsItem>>()
@@ -176,22 +179,23 @@ class ProductRepository private constructor(
         category: RequestBody,
         description: RequestBody,
         idUser: RequestBody,
-    ): LiveData<String> {
+    ): LiveData<Result<String>> {
+        postProductResult.value = Result.Loading
         val client = api.uploadProduct(image, title, category, description, idUser)
-        Log.d(TAG, client.toString())
         client.enqueue(object : Callback<UploadProductResponse> {
             override fun onResponse(
                 call: Call<UploadProductResponse>, response: Response<UploadProductResponse>,
             ) {
                 if (response.isSuccessful) {
-                    postProductResult.value = "success !"
+                    postProductResult.value = Result.Success("success !")
                 } else {
-                    postProductResult.value = "lengkapi data terlebih dahulu sebelum mengupload"
+                    postProductResult.value =
+                        Result.Error("Harap Lengkapi data : ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<UploadProductResponse>, t: Throwable) {
-                postProductResult.value = t.message.toString()
+                postProductResult.value = Result.Error(t.message.toString())
             }
 
         })
@@ -208,12 +212,41 @@ class ProductRepository private constructor(
             productDao.updateProduct(product)
         }
     }
+
     fun isProductBookmarkAlready(productId: Int): LiveData<Boolean> {
         return productDao.isProductBookmarkAlready(productId)
     }
 
     fun setToastText(text: String) {
         _toastText.value = Event(text)
+    }
+
+    fun getUserProduct(idUser: Int): LiveData<Result<List<ProductsUserItem>>> {
+        productsUserResult.value = Result.Loading
+
+        api.getAllUserProduct(idUser).enqueue(object : Callback<UserProductResponse> {
+            override fun onResponse(
+                call: Call<UserProductResponse>,
+                response: Response<UserProductResponse>,
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.listProducts?.let {
+                        productsUserResult.value = Result.Success(it)
+                    }
+
+                } else {
+                    productsUserResult.value = Result.Error(response.message())
+                }
+
+            }
+
+            override fun onFailure(call: Call<UserProductResponse>, t: Throwable) {
+                productsUserResult.value = Result.Error(t.message.toString())
+            }
+
+        })
+
+        return productsUserResult
     }
 
     companion object {

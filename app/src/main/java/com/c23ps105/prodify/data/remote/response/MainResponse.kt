@@ -13,6 +13,17 @@ data class ProductResponse(
     val listProducts: List<ProductsItem>,
 )
 
+data class UserProductResponse(
+    @field:SerializedName("Status")
+    val status: String,
+
+    @field:SerializedName("Message")
+    val message: String,
+
+    @field:SerializedName("userProducts")
+    val listProducts: List<ProductsUserItem>,
+)
+
 data class ProductsItem(
 
     @field:SerializedName("id")
@@ -38,6 +49,20 @@ data class ProductsItem(
 
     @field:SerializedName("updatedAt")
     val updatedAt: String? = null,
+)
+
+data class ProductsUserItem(
+    @field:SerializedName("title")
+    val title: String,
+
+    @field:SerializedName("category")
+    val category: String,
+
+    @field:SerializedName("description")
+    val description: String,
+
+    @field:SerializedName("imageURL")
+    val imageURL: String,
 )
 
 data class UploadProductResponse(

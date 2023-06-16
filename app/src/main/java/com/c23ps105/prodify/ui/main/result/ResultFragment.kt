@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.c23ps105.prodify.R
-import com.c23ps105.prodify.data.Product
 import com.c23ps105.prodify.data.UserProduct
 import com.c23ps105.prodify.databinding.FragmentResultBinding
 import com.c23ps105.prodify.helper.AuthViewModelFactory
@@ -17,16 +15,13 @@ import com.c23ps105.prodify.helper.MainViewModelFactory
 import com.c23ps105.prodify.helper.SessionPreferences
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
 import com.c23ps105.prodify.ui.main.dataStore
-import com.c23ps105.prodify.ui.main.detail.DetailResultFragment
 import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 import com.c23ps105.prodify.ui.viewModel.MainViewModel
 import com.c23ps105.prodify.utils.Result
-import com.c23ps105.prodify.utils.cat
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 
 class ResultFragment : Fragment() {
     private var _binding: FragmentResultBinding? = null
+    private var idUser: Int? = null
     private lateinit var viewModel: MainViewModel
     private lateinit var authViewModel: AuthViewModel
     private val binding get() = _binding!!
@@ -71,34 +66,35 @@ class ResultFragment : Fragment() {
     private fun setupResultList(adapter: (UserProduct) -> Unit) {
         val resultAdapter = ResultAdapter { result ->
             val mBundle = Bundle().also {
-                it.putInt(EXTRA_ID, result.id)
+//                it.putInt(EXTRA_ID, result.id)
                 it.putString(EXTRA_STATE, PRODUCT_STATE)
-                it.putParcelable(DetailResultFragment.NEWS_DATA, result)
-
+//                it.putParcelable(DetailResultFragment.NEWS_DATA, result)
             }
 
-            findNavController().enableOnBackPressed(true)
-            findNavController().navigate(
-                R.id.action_navigation_result_to_navigation_detail_result,
-                mBundle
-            )
+//            findNavController().enableOnBackPressed(true)
+//            findNavController().navigate(
+//                R.id.action_navigation_result_to_navigation_detail_result,
+//                mBundle
+//            )
         }
+        authViewModel.getPreferences().observe(viewLifecycleOwner) {
+            viewModel.getUserProductList(it.userId).observe(viewLifecycleOwner) {
+                when (it) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
 
-        viewModel.getProductList().observe(viewLifecycleOwner) {
-            when (it) {
-                is Result.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        adapter.invoke(UserProduct(resultAdapter, it.data))
+                    }
 
-                is Result.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    adapter.invoke(UserProduct(resultAdapter, it.data))
-                }
-
-                is Result.Error -> {
-                    binding.progressBar.visibility = View.GONE
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
                 }
             }
+
         }
     }
 

@@ -33,11 +33,11 @@ class ProdifyTextView : AppCompatTextView {
     }
 
     private fun init() {
-        val id = resources.getResourceEntryName(id)
-        txtColor = if (id.endsWith("_white")) ContextCompat.getColor(
+        val idName = resources.getResourceEntryName(id)
+        txtColor = if (idName.endsWith("_white")) ContextCompat.getColor(
             context,
             R.color.white_pure
-        ) else if (id.endsWith("_middle")) {
+        ) else if (idName.endsWith("_middle")) {
             ContextCompat.getColor(
                 context,
                 R.color.black200

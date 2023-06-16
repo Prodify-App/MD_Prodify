@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.c23ps105.prodify.data.remote.response.PredictDataModel
 import com.c23ps105.prodify.databinding.ActivityCameraResultBinding
 import com.c23ps105.prodify.helper.AuthViewModelFactory
 import com.c23ps105.prodify.helper.MainViewModelFactory
@@ -24,6 +25,7 @@ import com.c23ps105.prodify.ui.viewModel.AuthViewModel
 import com.c23ps105.prodify.ui.viewModel.MainViewModel
 import com.c23ps105.prodify.ui.viewModel.PredictViewModel
 import com.c23ps105.prodify.utils.Result
+import com.c23ps105.prodify.utils.cat
 import com.c23ps105.prodify.utils.categoryTextTransform
 import com.c23ps105.prodify.utils.imageMultipart
 import com.c23ps105.prodify.utils.reduceFileImage
@@ -55,21 +57,7 @@ class CameraResultActivity : AppCompatActivity() {
 
         if (result == CAMERA_X_RESULT) {
             setExtraFile()
-            predict()
-        }
-
-        binding.btnFinalize.setOnClickListener {
-            getFile?.let {
-                val image = imageMultipart(it, "attachment")
-                val title = textRequestBody(binding.edtTitle.text)
-                val category = textRequestBody(binding.tvCategoryWhite.text)
-                val description = textRequestBody(binding.edtDescription.text)
-                val userId = textRequestBody(idUser)
-                mainViewModel.postProduct(image, title, category, description, userId)
-                    .observe(this) { text ->
-                        predictViewModel.setToastText(text)
-                    }
-            }
+            classifiesProduct()
         }
 
         binding.icCopyTitle.setOnClickListener {
@@ -89,7 +77,7 @@ class CameraResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun predict() {
+    private fun classifiesProduct() {
         getFile?.let { file ->
             classifier = Classifier(this.assets, mModelPath, mLabelPath, mInputSize)
             val predictedCategory =
@@ -98,9 +86,6 @@ class CameraResultActivity : AppCompatActivity() {
             val categoryTransform = categoryTextTransform(predictedCategory)
             predictViewModel.setToastText("Classified Successfully : $categoryTransform ")
             binding.tvCategoryWhite.text = categoryTransform
-
-            val category = textRequestBody(predictedCategory)
-            val imagePart = imageMultipart(file, "image")
 
             var time = 60
             timer = object : CountDownTimer(60_000, 1_000) {
@@ -119,28 +104,65 @@ class CameraResultActivity : AppCompatActivity() {
                         "Tunggu sebentar lagi ya, hasil judul dan deskripsi kamu bentar lagi ditulis nih."
                     binding.tvCountdown.visibility = View.GONE
                 }
-
             }
-
             timer.start()
 
-            predictViewModel.predict(category, imagePart).observe(this) {
-                when (it) {
-                    is Result.Error -> {
-                        binding.loading.visibility = View.GONE
-                        predictViewModel.setToastText(it.error)
-                    }
+            predict(predictedCategory,file) {
+                binding.edtTitle.setText(it.title)
+                binding.edtDescription.setText(it.description)
+            }
 
-                    Result.Loading -> {
-                        binding.loading.visibility = View.VISIBLE
+            binding.btnFinalize.setOnClickListener {
+                val image = imageMultipart(file, "attachment")
+                val title = textRequestBody(binding.edtTitle.text)
+                val category = textRequestBody(binding.tvCategoryWhite.text)
+                val description = textRequestBody(binding.edtDescription.text)
+                val userId = textRequestBody(idUser)
+                mainViewModel.postProduct(image, title, category, description, userId)
+                    .observe(this) {
+                        when (it) {
+                            is Result.Error -> predictViewModel.setToastText(it.error)
+                            Result.Loading -> predictViewModel.setToastText("Loading..")
+                            is Result.Success -> {
+                                predictViewModel.setToastText(it.data)
+                            }
+                        }
                     }
+            }
 
-                    is Result.Success -> {
-                        binding.loading.visibility = View.GONE
-                        binding.edtTitle.setText(it.data[0])
-                        binding.edtDescription.setText(it.data[1])
-                        Log.d("Predict Error", it.data[2])
-                    }
+        }
+    }
+
+    private fun setLoadingTime() {
+
+    }
+
+    private fun predict(predictedCategory: String, file: File, data: (PredictDataModel) -> Unit) {
+        val category = textRequestBody(predictedCategory)
+        val imagePart = imageMultipart(file, "image")
+
+        predictViewModel.predict(category, imagePart).observe(this) {
+            when (it) {
+                is Result.Error -> {
+                    binding.loading.visibility = View.GONE
+                    predictViewModel.setToastText(it.error)
+                    cat(it.error)
+                }
+
+                Result.Loading -> {
+                    binding.loading.visibility = View.VISIBLE
+                }
+
+                is Result.Success -> {
+                    binding.loading.visibility = View.GONE
+                    data.invoke(
+                        PredictDataModel(
+                            it.data[0],
+                            it.data[1],
+                            it.data[2]
+                        )
+                    )
+                    cat(it.data[2])
                 }
             }
         }

@@ -2,9 +2,14 @@ package com.c23ps105.prodify.data
 
 import com.c23ps105.prodify.data.local.entity.ProductEntity
 import com.c23ps105.prodify.data.remote.response.BlogsItem
+import com.c23ps105.prodify.data.remote.response.PredictDataModel
+import com.c23ps105.prodify.data.remote.response.PredictResponse
+import com.c23ps105.prodify.data.remote.response.ProductResponse
+import com.c23ps105.prodify.data.remote.response.ProductsUserItem
 import com.c23ps105.prodify.ui.adapter.BlogsAdapter
 import com.c23ps105.prodify.ui.adapter.ProductAdapter
 import com.c23ps105.prodify.ui.adapter.ResultAdapter
+import kotlinx.parcelize.Parcelize
 
 data class DetailUserModel(
     val productId: Int,
@@ -22,7 +27,7 @@ data class Product(
 
 data class UserProduct(
     val adapter: ResultAdapter,
-    val list: List<ProductEntity>,
+    val list: List<ProductsUserItem>,
 )
 
 data class Blog(
@@ -34,6 +39,10 @@ data class ProductDetail(
     val data: DetailUserModel,
 )
 
+
+data class PredictData(
+    val data: PredictDataModel
+)
 
 data class PreferenceKey(
     val userId: Int,

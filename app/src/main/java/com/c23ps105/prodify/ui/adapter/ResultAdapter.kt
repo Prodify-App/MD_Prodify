@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.c23ps105.prodify.R
 import com.c23ps105.prodify.data.local.entity.ProductEntity
+import com.c23ps105.prodify.data.remote.response.ProductsUserItem
 import com.c23ps105.prodify.databinding.ItemStaggeredGridBinding
 
 class ResultAdapter(
-    private val onProductClick: (ProductEntity) -> Unit,
+    private val onProductClick: (ProductsUserItem) -> Unit,
 ) :
-    ListAdapter<ProductEntity, ResultAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<ProductsUserItem, ResultAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
@@ -33,7 +34,7 @@ class ResultAdapter(
     inner class MyViewHolder(val binding: ItemStaggeredGridBinding) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(product: ProductEntity) {
+        fun bind(product: ProductsUserItem) {
             binding.apply {
                 tvCategoryCardMiddle.text = product.category
                 tvTitle.text = product.title
@@ -44,19 +45,19 @@ class ResultAdapter(
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<ProductEntity> =
-            object : DiffUtil.ItemCallback<ProductEntity>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<ProductsUserItem> =
+            object : DiffUtil.ItemCallback<ProductsUserItem>() {
                 override fun areItemsTheSame(
-                    oldItem: ProductEntity,
-                    newItem: ProductEntity,
+                    oldItem: ProductsUserItem,
+                    newItem: ProductsUserItem,
                 ): Boolean {
-                    return oldItem.id == newItem.id
+                    return oldItem.title == newItem.title
                 }
 
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
-                    oldItem: ProductEntity,
-                    newItem: ProductEntity,
+                    oldItem: ProductsUserItem,
+                    newItem: ProductsUserItem,
                 ): Boolean {
                     return oldItem == newItem
                 }

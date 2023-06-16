@@ -7,6 +7,7 @@ import com.c23ps105.prodify.data.remote.response.ProductResponse
 import com.c23ps105.prodify.data.remote.response.ProductsItem
 import com.c23ps105.prodify.data.remote.response.RegisterResponse
 import com.c23ps105.prodify.data.remote.response.UploadProductResponse
+import com.c23ps105.prodify.data.remote.response.UserProductResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -44,7 +45,7 @@ interface ApiService {
     @GET("getProducts/user/{id}")
     fun getAllUserProduct(
         @Path("id") userId: Int,
-    ): Call<ProductResponse>
+    ): Call<UserProductResponse>
 
 
     @GET("getProducts/product/{id}")
@@ -60,5 +61,6 @@ interface ApiService {
     fun getBlogsById(
         @Path("id") ProductId: Int,
     ): Call<BlogsItem>
+
 }
 
