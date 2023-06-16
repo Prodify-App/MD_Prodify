@@ -1,6 +1,6 @@
 # Prodify Mobile App
 ## About Our App
-Capstone project Bangkit 2022
+Capstone project Bangkit 2023
 Prodify is application for Generating Product Titles and Descriptions.
 
 ### Libraries We Use
